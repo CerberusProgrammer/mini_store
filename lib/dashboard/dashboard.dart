@@ -44,12 +44,17 @@ class Dashboard extends StatelessWidget {
 
   Widget editMode(BuildContext context) {
     return Scaffold(
-      body: Text('edit'),
+      body: const Center(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (builder) {
-            return const AddProduct();
-          }));
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (builder) {
+                return AddProduct();
+              },
+            ),
+          );
         },
         child: const Icon(Icons.add),
       ),

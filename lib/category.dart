@@ -18,23 +18,39 @@ class Category extends StatelessWidget {
     return Scaffold(
       body: LayoutBuilder(
         builder: (context, constraints) {
-          return GridView.count(
-            crossAxisSpacing: 2,
-            crossAxisCount: constraints.maxWidth > 800 ? 6 : 3,
-            shrinkWrap: true,
-            children: List.generate(10, (index) {
-              return Card(
-                child: InkWell(
-                  customBorder: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GridView.count(
+              crossAxisSpacing: 2,
+              crossAxisCount: constraints.maxWidth > 800 ? 6 : 3,
+              shrinkWrap: true,
+              children: List.generate(categories.length, (index) {
+                return Card(
+                  elevation: 5,
+                  child: InkWell(
+                    customBorder: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    onTap: () {},
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(
+                            categories[index].name,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                              color: Colors.black,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                  onTap: () {},
-                  child: ListTile(
-                    subtitle: Text('$index'),
-                  ),
-                ),
-              );
-            }),
+                );
+              }),
+            ),
           );
         },
       ),

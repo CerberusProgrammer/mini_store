@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 class Product {
+  int id;
   String name;
   String description;
   double price;
@@ -8,6 +9,7 @@ class Product {
   Category category;
 
   Product({
+    required this.id,
     required this.name,
     this.description = '',
     required this.price,
