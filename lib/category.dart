@@ -16,22 +16,27 @@ class Category extends StatelessWidget {
 
   Widget viewMode() {
     return Scaffold(
-      body: GridView.count(
-        crossAxisCount: 3,
-        shrinkWrap: true,
-        children: List.generate(categories.length, (index) {
-          return Card(
-            child: InkWell(
-              customBorder: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              onTap: () {},
-              child: ListTile(
-                subtitle: Text(categories[index].name),
-              ),
-            ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return GridView.count(
+            crossAxisSpacing: 2,
+            crossAxisCount: constraints.maxWidth > 800 ? 6 : 3,
+            shrinkWrap: true,
+            children: List.generate(10, (index) {
+              return Card(
+                child: InkWell(
+                  customBorder: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  onTap: () {},
+                  child: ListTile(
+                    subtitle: Text('$index'),
+                  ),
+                ),
+              );
+            }),
           );
-        }),
+        },
       ),
     );
   }
