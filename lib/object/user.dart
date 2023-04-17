@@ -10,7 +10,7 @@ class User {
   final storage = const FlutterSecureStorage();
 
   User({
-    required this.username,
+    this.username = 'Default',
     String? password,
     bool setPassword = true,
   }) {
