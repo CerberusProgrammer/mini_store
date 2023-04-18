@@ -91,17 +91,35 @@ class CategoryPage extends StatelessWidget {
 
                             return AlertDialog(
                               title: Text(categories[index].name),
-                              content: TextField(
-                                controller: name,
+                              content: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SizedBox(
+                                    width: 200,
+                                    height: 40,
+                                    child: TextField(
+                                      controller: name,
+                                      decoration: const InputDecoration(
+                                          labelText: 'Name'),
+                                    ),
+                                  ),
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.remove_red_eye))
+                                ],
                               ),
                               actions: [
                                 TextButton(
-                                  onPressed: () {
-                                    categories[index].name = name.text;
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text('Change'),
-                                ),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text('Cancel')),
+                                FilledButton(
+                                    onPressed: () {
+                                      categories[index].name = name.text;
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text('Change')),
                               ],
                             );
                           });
