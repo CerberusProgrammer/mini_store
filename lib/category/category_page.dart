@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:mini_store/category/change_category.dart';
+import 'package:mini_store/category/create_category.dart';
 import 'package:mini_store/category/show_products.dart';
 import 'package:mini_store/data/categories.dart';
 
-class CategoryPage extends StatelessWidget {
-  final bool mode;
+import 'create_category.dart';
 
-  const CategoryPage({
+class CategoryPage extends StatefulWidget {
+  bool mode;
+
+  CategoryPage({
     super.key,
     required this.mode,
   });
 
   @override
+  State<CategoryPage> createState() => _CategoryPageState();
+}
+
+class _CategoryPageState extends State<CategoryPage> {
+  @override
   Widget build(BuildContext context) {
-    return mode ? editMode() : viewMode();
+    final bool mode = widget.mode;
+    return mode ? editMode(mode) : viewMode();
   }
 
   Widget viewMode() {
@@ -28,7 +37,7 @@ class CategoryPage extends StatelessWidget {
               shrinkWrap: true,
               children: List.generate(categories.length, (index) {
                 return Card(
-                  color: categories[index].color.withAlpha(127),
+                  color: categories[index].color.withAlpha(180),
                   child: InkWell(
                     customBorder: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -66,7 +75,7 @@ class CategoryPage extends StatelessWidget {
     );
   }
 
-  Widget editMode() {
+  Widget editMode(bool mode) {
     return LayoutBuilder(
       builder: (context, constraints) {
         return Scaffold(
@@ -78,7 +87,7 @@ class CategoryPage extends StatelessWidget {
               shrinkWrap: true,
               children: List.generate(categories.length, (index) {
                 return Card(
-                  color: categories[index].color.withAlpha(127),
+                  color: categories[index].color.withAlpha(180),
                   child: InkWell(
                     customBorder: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -89,7 +98,11 @@ class CategoryPage extends StatelessWidget {
                         return ChangeCategory(
                           index: index,
                         );
-                      }));
+                      })).then((value) {
+                        setState(() {
+                          mode = true;
+                        });
+                      });
                     },
                     child: Stack(
                       children: [
@@ -109,13 +122,13 @@ class CategoryPage extends StatelessWidget {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (builder) {
-                    return const AlertDialog(
-                      title: Text('Add new category'),
-                    );
-                  });
+              Navigator.push(context, MaterialPageRoute(builder: (builder) {
+                return const CreateCategory();
+              })).then((value) {
+                setState(() {
+                  mode = true;
+                });
+              });
             },
             child: const Icon(Icons.add),
           ),

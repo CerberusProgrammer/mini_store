@@ -103,6 +103,9 @@ class _AddProductState extends State<AddProduct> {
         ),
       ),
       PageViewModel(
+        decoration: const PageDecoration(
+          bodyAlignment: Alignment.center,
+        ),
         title: 'Lets talk about money',
         body: 'How much',
       ),

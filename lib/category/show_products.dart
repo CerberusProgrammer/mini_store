@@ -52,14 +52,18 @@ class _ShowProductsState extends State<ShowProducts> {
                   width: constraints.maxWidth,
                   height: 200,
                   child: Card(
+                    color: widget.category.color,
                     semanticContainer: true,
                     clipBehavior: Clip.antiAliasWithSaveLayer,
                     elevation: 10,
                     child: Stack(
                       children: [
                         Positioned.fill(
-                          child: widget.category.image!,
-                        )
+                            child: Icon(
+                          widget.category.icon,
+                          size: 100,
+                          color: const Color.fromARGB(79, 0, 0, 0),
+                        ))
                       ],
                     ),
                   ),
