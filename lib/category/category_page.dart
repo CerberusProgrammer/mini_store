@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mini_store/category/change_category.dart';
 import 'package:mini_store/category/show_products.dart';
 import 'package:mini_store/data/categories.dart';
 
@@ -83,63 +84,12 @@ class CategoryPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     onTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (builder) {
-                            TextEditingController name =
-                                TextEditingController();
-
-                            return AlertDialog(
-                              title: Text(categories[index].name),
-                              content: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  SizedBox(
-                                    width: 200,
-                                    height: 60,
-                                    child: TextField(
-                                      controller: name,
-                                      decoration: const InputDecoration(
-                                          labelText: 'Name'),
-                                    ),
-                                  ),
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        categories[index].icon,
-                                        size: 30,
-                                      )),
-                                  SizedBox(
-                                    width: 40,
-                                    child: OutlinedButton(
-                                        style: OutlinedButton.styleFrom(
-                                            backgroundColor:
-                                                categories[index].color,
-                                            side: const BorderSide(
-                                                color: Color.fromARGB(
-                                                    70, 35, 35, 35),
-                                                width: 8)),
-                                        onPressed: () {},
-                                        child: null),
-                                  ),
-                                ],
-                              ),
-                              actions: [
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text('Cancel')),
-                                FilledButton(
-                                    onPressed: () {
-                                      categories[index].name = name.text;
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text('Change')),
-                              ],
-                            );
-                          });
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (builder) {
+                        return ChangeCategory(
+                          index: index,
+                        );
+                      }));
                     },
                     child: Stack(
                       children: [
