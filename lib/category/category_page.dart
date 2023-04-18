@@ -92,11 +92,12 @@ class CategoryPage extends StatelessWidget {
                             return AlertDialog(
                               title: Text(categories[index].name),
                               content: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   SizedBox(
                                     width: 200,
-                                    height: 40,
+                                    height: 60,
                                     child: TextField(
                                       controller: name,
                                       decoration: const InputDecoration(
@@ -105,7 +106,23 @@ class CategoryPage extends StatelessWidget {
                                   ),
                                   IconButton(
                                       onPressed: () {},
-                                      icon: Icon(Icons.remove_red_eye))
+                                      icon: Icon(
+                                        categories[index].icon,
+                                        size: 30,
+                                      )),
+                                  SizedBox(
+                                    width: 40,
+                                    child: OutlinedButton(
+                                        style: OutlinedButton.styleFrom(
+                                            backgroundColor:
+                                                categories[index].color,
+                                            side: const BorderSide(
+                                                color: Color.fromARGB(
+                                                    70, 35, 35, 35),
+                                                width: 8)),
+                                        onPressed: () {},
+                                        child: null),
+                                  ),
                                 ],
                               ),
                               actions: [
@@ -145,8 +162,8 @@ class CategoryPage extends StatelessWidget {
               showDialog(
                   context: context,
                   builder: (builder) {
-                    return AlertDialog(
-                      title: const Text('Add new category'),
+                    return const AlertDialog(
+                      title: Text('Add new category'),
                     );
                   });
             },
