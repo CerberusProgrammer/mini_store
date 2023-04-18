@@ -4,14 +4,16 @@ import 'package:mini_store/object/product.dart';
 class Category {
   String name;
   String description;
-  Icon icon;
+  IconData icon;
   Color color;
+  Image? image;
   List<Product> products = [];
 
   Category({
     required this.name,
     this.description = '',
-    this.icon = const Icon(Icons.store),
+    this.icon = Icons.store,
     this.color = Colors.lightBlue,
+    this.image,
   });
 }

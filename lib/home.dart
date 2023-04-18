@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mini_store/category.dart';
+import 'package:mini_store/category/category_page.dart';
 import 'package:mini_store/dashboard/dashboard.dart';
+import 'package:mini_store/profile/profile.dart';
+import 'package:mini_store/stats/stats.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -21,6 +23,10 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
     Tab(
       icon: Icon(Icons.category),
       text: 'Category',
+    ),
+    Tab(
+      icon: Icon(Icons.bar_chart),
+      text: 'Stadistics',
     ),
     Tab(
       icon: Icon(Icons.person),
@@ -72,8 +78,9 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
         controller: controller,
         children: [
           Dashboard(mode: mode),
-          Category(mode: mode),
-          const Center(),
+          CategoryPage(mode: mode),
+          const Stats(),
+          const Profile(),
         ],
       ),
       bottomNavigationBar: Material(
