@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mini_store/category/show_table.dart';
+import 'package:mini_store/data/products.dart';
 import 'package:mini_store/object/category.dart';
 
 import '../add_product.dart';
@@ -69,6 +71,16 @@ class _ShowProductsState extends State<ShowProducts> {
                   ),
                 ),
               ),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Card(
+                  child: Expanded(
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: ProductDataGrid()),
+                  ),
+                ),
+              ),
             ],
           ),
           floatingActionButton: mode
@@ -83,7 +95,11 @@ class _ShowProductsState extends State<ShowProducts> {
                           );
                         },
                       ),
-                    );
+                    ).then((value) {
+                      setState(() {
+                        mode = mode;
+                      });
+                    });
                   },
                   child: const Icon(Icons.add),
                 )

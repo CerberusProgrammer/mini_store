@@ -33,7 +33,9 @@ class _CategoryPageState extends State<CategoryPage> {
             padding: const EdgeInsets.all(8.0),
             child: GridView.count(
               crossAxisSpacing: 2,
-              crossAxisCount: constraints.maxWidth > 800 ? 6 : 3,
+              crossAxisCount: constraints.maxWidth ~/ 150 > 0
+                  ? constraints.maxWidth ~/ 150
+                  : 1,
               shrinkWrap: true,
               children: List.generate(categories.length, (index) {
                 return Card(
@@ -83,7 +85,9 @@ class _CategoryPageState extends State<CategoryPage> {
             padding: const EdgeInsets.all(8.0),
             child: GridView.count(
               crossAxisSpacing: 2,
-              crossAxisCount: constraints.maxWidth > 800 ? 6 : 3,
+              crossAxisCount: constraints.maxWidth ~/ 150 > 0
+                  ? constraints.maxWidth ~/ 150
+                  : 1,
               shrinkWrap: true,
               children: List.generate(categories.length, (index) {
                 return Card(

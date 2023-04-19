@@ -60,11 +60,13 @@ class _ChangeCategoryState extends State<ChangeCategory> {
                   icon: const Icon(Icons.delete))
             ],
           ),
-          body: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
+          body: Stack(
+            children: [
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
                     width: constraints.maxWidth,
@@ -85,91 +87,106 @@ class _ChangeCategoryState extends State<ChangeCategory> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 30, right: 30),
-                  child: TextField(
-                    controller: name,
-                    decoration: const InputDecoration(
-                      labelText: 'Name',
-                    ),
-                    onSubmitted: (value) {
-                      setState(() {
-                        categories[widget.index].name = value;
-                      });
-                    },
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 20.0, right: 20, top: 10),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 320),
+                child: SingleChildScrollView(
                   child: SizedBox(
-                    width: constraints.maxWidth,
-                    height: 125,
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GridView.count(
-                          shrinkWrap: true,
-                          crossAxisCount: 8,
-                          children:
-                              List.generate(selectColorPlus.length, (index) {
-                            return OutlinedButton(
-                              onPressed: () {
-                                setState(() {
-                                  categories[widget.index].color =
-                                      selectColorPlus[index];
-                                });
-                              },
-                              child: null,
-                              style: OutlinedButton.styleFrom(
-                                  backgroundColor: selectColorPlus[index],
-                                  side: const BorderSide(
-                                      color: Color.fromARGB(70, 35, 35, 35),
-                                      width: 8)),
-                            );
-                          }),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 30, right: 30),
+                          child: TextField(
+                            controller: name,
+                            decoration: const InputDecoration(
+                              labelText: 'Name',
+                            ),
+                            onSubmitted: (value) {
+                              setState(() {
+                                categories[widget.index].name = value;
+                              });
+                            },
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20.0, right: 20),
-                  child: SizedBox(
-                    width: constraints.maxWidth,
-                    height: 150,
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GridView.count(
-                          shrinkWrap: true,
-                          crossAxisCount: 6,
-                          children: List.generate(selectIcons.length, (index) {
-                            return OutlinedButton(
-                              onPressed: () {
-                                setState(() {
-                                  categories[widget.index].icon =
-                                      selectIcons[index];
-                                });
-                              },
-                              style: OutlinedButton.styleFrom(
-                                  backgroundColor: Colors.grey,
-                                  side: const BorderSide(
-                                      color: Color.fromARGB(60, 35, 35, 35),
-                                      width: 4)),
-                              child: Icon(
-                                selectIcons[index],
-                                color: Colors.black,
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 20.0, right: 20, top: 10),
+                          child: Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                child: GridView.count(
+                                  shrinkWrap: true,
+                                  crossAxisCount:
+                                      ((constraints.maxWidth ~/ 100) * 1.5)
+                                          .toInt(),
+                                  children: List.generate(
+                                      selectColorPlus.length, (index) {
+                                    return OutlinedButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          categories[widget.index].color =
+                                              selectColorPlus[index];
+                                        });
+                                      },
+                                      child: null,
+                                      style: OutlinedButton.styleFrom(
+                                          backgroundColor:
+                                              selectColorPlus[index],
+                                          side: const BorderSide(
+                                              color: Color.fromARGB(
+                                                  70, 35, 35, 35),
+                                              width: 8)),
+                                    );
+                                  }),
+                                ),
                               ),
-                            );
-                          }),
+                            ),
+                          ),
                         ),
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20.0, right: 20),
+                          child: Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                child: GridView.count(
+                                  shrinkWrap: true,
+                                  crossAxisCount:
+                                      ((constraints.maxWidth ~/ 100) * 1.5)
+                                          .toInt(),
+                                  children: List.generate(selectIcons.length,
+                                      (index) {
+                                    return OutlinedButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          categories[widget.index].icon =
+                                              selectIcons[index];
+                                        });
+                                      },
+                                      style: OutlinedButton.styleFrom(
+                                          backgroundColor: Colors.grey,
+                                          side: const BorderSide(
+                                              color: Color.fromARGB(
+                                                  60, 35, 35, 35),
+                                              width: 4)),
+                                      child: Icon(
+                                        selectIcons[index],
+                                        color: Colors.black,
+                                      ),
+                                    );
+                                  }),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {

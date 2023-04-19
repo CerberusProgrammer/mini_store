@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:mini_store/object/category.dart';
 
 class Product {
   int id;
@@ -12,8 +12,8 @@ class Product {
     required this.id,
     required this.name,
     this.description = '',
-    required this.price,
-    required this.disponibility,
+    this.price = 0,
+    this.disponibility = 0,
     required this.category,
   });
 }
