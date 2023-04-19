@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:mini_store/data/currency.dart';
-import 'package:mini_store/data/products.dart';
 import 'package:mini_store/object/category.dart';
 import 'package:mini_store/data/categories.dart';
 import 'package:mini_store/object/product.dart';
@@ -193,8 +192,10 @@ class _AddProductState extends State<AddProduct> {
             )
           : null,
       onDone: () {
-        productList.add(Product(
-          id: productList.length,
+        if (category >= -1) {}
+
+        widget.category?.products.add(Product(
+          id: widget.category!.products.length,
           name: name.text,
           category: category == -1 ? widget.category! : categories[category],
         ));

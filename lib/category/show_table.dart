@@ -18,10 +18,6 @@ class ProductDataSource extends DataGridSource {
       (product) {
         return DataGridRow(
           cells: [
-            DataGridCell<int>(
-              columnName: 'id',
-              value: product.id,
-            ),
             DataGridCell<String>(
               columnName: 'name',
               value: product.name,
@@ -49,11 +45,10 @@ class ProductDataSource extends DataGridSource {
         cells: row.getCells().map<Widget>(
       (e) {
         return Container(
-          alignment: (e.columnName == 'id' ||
-                  e.columnName == 'price' ||
-                  e.columnName == 'disponibility')
-              ? Alignment.centerRight
-              : Alignment.centerLeft,
+          alignment:
+              (e.columnName == 'price' || e.columnName == 'disponibility')
+                  ? Alignment.centerRight
+                  : Alignment.centerLeft,
           padding: const EdgeInsets.all(8.0),
           child: Text(e.value.toString()),
         );
@@ -68,22 +63,28 @@ class ProductDataGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SfDataGrid(
-      allowSorting: true,
+      headerRowHeight: 30,
       allowColumnsResizing: true,
+      allowFiltering: true,
+      allowPullToRefresh: true,
+      gridLinesVisibility: GridLinesVisibility.none,
+      columnWidthMode: ColumnWidthMode.fill,
       source: ProductDataSource(products: getProducts()),
       columns: [
-        GridColumn(columnName: 'id', label: const Text('ID'), width: 50),
         GridColumn(
           columnName: 'name',
           label: const Text('Name'),
+          columnWidthMode: ColumnWidthMode.fill,
         ),
         GridColumn(
           columnName: 'price',
           label: const Text('Price'),
+          columnWidthMode: ColumnWidthMode.fitByColumnName,
         ),
         GridColumn(
           columnName: 'disponibility',
           label: const Text('Disponibility'),
+          columnWidthMode: ColumnWidthMode.fitByColumnName,
         ),
       ],
     );

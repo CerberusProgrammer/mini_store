@@ -71,16 +71,10 @@ class _ShowProductsState extends State<ShowProducts> {
                   ),
                 ),
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Card(
-                  child: Expanded(
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: ProductDataGrid()),
-                  ),
-                ),
-              ),
+                child: ProductDataGrid(),
+              )
             ],
           ),
           floatingActionButton: mode
