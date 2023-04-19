@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mini_store/data/products.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 import '../object/product.dart';
@@ -58,18 +57,18 @@ class ProductDataSource extends DataGridSource {
 }
 
 class ProductDataGrid extends StatelessWidget {
-  const ProductDataGrid({super.key});
+  final List<Product> products;
+
+  const ProductDataGrid({super.key, required this.products});
 
   @override
   Widget build(BuildContext context) {
     return SfDataGrid(
       headerRowHeight: 30,
       allowColumnsResizing: true,
-      allowFiltering: true,
-      allowPullToRefresh: true,
       gridLinesVisibility: GridLinesVisibility.none,
       columnWidthMode: ColumnWidthMode.fill,
-      source: ProductDataSource(products: getProducts()),
+      source: ProductDataSource(products: products),
       columns: [
         GridColumn(
           columnName: 'name',
@@ -88,9 +87,5 @@ class ProductDataGrid extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  List<Product> getProducts() {
-    return productList;
   }
 }

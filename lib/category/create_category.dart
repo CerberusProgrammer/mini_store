@@ -145,7 +145,7 @@ class _CreateCategory extends State<CreateCategory> {
                     icon: icon,
                     color: color,
                   ));
-                  print('object');
+
                   Navigator.pop(context);
                 },
                 child: const Icon(Icons.done),

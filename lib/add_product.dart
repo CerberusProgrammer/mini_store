@@ -192,13 +192,21 @@ class _AddProductState extends State<AddProduct> {
             )
           : null,
       onDone: () {
-        if (category >= -1) {}
-
-        widget.category?.products.add(Product(
-          id: widget.category!.products.length,
-          name: name.text,
-          category: category == -1 ? widget.category! : categories[category],
-        ));
+        if (widget.category == null) {
+          categories[category].products.add(
+                Product(
+                  id: widget.category!.products.length,
+                  name: name.text,
+                ),
+              );
+        } else {
+          widget.category?.products.add(
+            Product(
+              id: widget.category!.products.length,
+              name: name.text,
+            ),
+          );
+        }
 
         Navigator.pop(context);
       },
