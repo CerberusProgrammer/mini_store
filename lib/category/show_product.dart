@@ -20,15 +20,68 @@ class ShowProduct extends StatefulWidget {
 class _ShowProductState extends State<ShowProduct> {
   @override
   Widget build(BuildContext context) {
-    return DraggableHome(
-      title: Text(widget.category.name),
-      headerWidget: Container(
-        color: widget.category.color,
-        child: Center(
-          child: Text('hi'),
+    return Scaffold(
+      appBar: AppBar(
+        foregroundColor: Colors.white,
+        title: Text(
+          widget.product.name,
+          style: const TextStyle(color: Colors.white),
         ),
+        backgroundColor: widget.category.color,
+        actions: [],
       ),
-      body: List.generate(10, (index) => Text('data')),
+      body: Column(
+        children: [
+          SizedBox(
+            height: 300,
+            child: Container(
+              color: widget.category.color,
+            ),
+          ),
+          Card()
+        ],
+      ),
     );
   }
 }
+
+/*
+DraggableHome(
+                                                appBarColor:
+                                                    widget.category.color,
+                                                alwaysShowLeadingAndAction:
+                                                    true,
+                                                title: Text(widget.category
+                                                    .products[index].name),
+                                                backgroundColor: Colors.white,
+                                                headerWidget: Container(
+                                                  color: widget.category.color,
+                                                  child: Icon(
+                                                    widget.category.icon,
+                                                    size: 100,
+                                                  ),
+                                                ),
+                                                body: [
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        widget
+                                                            .category
+                                                            .products[index]
+                                                            .name,
+                                                        style: TextStyle(
+                                                            fontSize: 24,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500),
+                                                      )
+                                                    ],
+                                                  )
+                                                ],
+                                              );
+ */

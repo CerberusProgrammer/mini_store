@@ -161,7 +161,7 @@ class _ShowProductsState extends State<ShowProducts> {
                     left: 10,
                   ),
                   child: Card(
-                    elevation: 2,
+                    color: widget.category.color.withOpacity(0.4),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: GridView.count(
@@ -186,18 +186,28 @@ class _ShowProductsState extends State<ShowProducts> {
                                                 MaterialPageRoute(
                                                     builder: (builder) {
                                               return DraggableHome(
+                                                leading: IconButton(
+                                                  icon: const Icon(
+                                                    Icons.arrow_back,
+                                                    color: Colors.white,
+                                                  ),
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                ),
                                                 appBarColor:
                                                     widget.category.color,
                                                 alwaysShowLeadingAndAction:
                                                     true,
-                                                title: Text(widget.category
-                                                    .products[index].name),
+                                                title: const Text(''),
                                                 backgroundColor: Colors.white,
                                                 headerWidget: Container(
                                                   color: widget.category.color,
                                                   child: Icon(
                                                     widget.category.icon,
                                                     size: 100,
+                                                    color: const Color.fromARGB(
+                                                        180, 255, 255, 255),
                                                   ),
                                                 ),
                                                 body: [
@@ -214,7 +224,9 @@ class _ShowProductsState extends State<ShowProducts> {
                                                             .products[index]
                                                             .name,
                                                         style: TextStyle(
-                                                            fontSize: 24,
+                                                            fontSize: 32,
+                                                            color: widget
+                                                                .category.color,
                                                             fontWeight:
                                                                 FontWeight
                                                                     .w500),
