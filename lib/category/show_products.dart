@@ -1,3 +1,4 @@
+import 'package:draggable_home/draggable_home.dart';
 import 'package:flutter/material.dart';
 import 'package:mini_store/category/show_product.dart';
 import 'package:mini_store/category/table.dart';
@@ -164,6 +165,7 @@ class _ShowProductsState extends State<ShowProducts> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: GridView.count(
+                        physics: const NeverScrollableScrollPhysics(),
                         crossAxisCount: constraints.maxWidth ~/ 150 > 0
                             ? constraints.maxWidth ~/ 150
                             : 1,
@@ -183,10 +185,43 @@ class _ShowProductsState extends State<ShowProducts> {
                                             Navigator.push(context,
                                                 MaterialPageRoute(
                                                     builder: (builder) {
-                                              return ShowProduct(
-                                                product: widget
-                                                    .category.products[index],
-                                                category: widget.category,
+                                              return DraggableHome(
+                                                appBarColor:
+                                                    widget.category.color,
+                                                alwaysShowLeadingAndAction:
+                                                    true,
+                                                title: Text(widget.category
+                                                    .products[index].name),
+                                                backgroundColor: Colors.white,
+                                                headerWidget: Container(
+                                                  color: widget.category.color,
+                                                  child: Icon(
+                                                    widget.category.icon,
+                                                    size: 100,
+                                                  ),
+                                                ),
+                                                body: [
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        widget
+                                                            .category
+                                                            .products[index]
+                                                            .name,
+                                                        style: TextStyle(
+                                                            fontSize: 24,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500),
+                                                      )
+                                                    ],
+                                                  )
+                                                ],
                                               );
                                             }));
                                           },
