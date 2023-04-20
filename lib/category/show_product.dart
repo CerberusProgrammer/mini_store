@@ -34,6 +34,7 @@ class _ShowProductState extends State<ShowProduct> {
       ),
       appBarColor: widget.category.color,
       alwaysShowLeadingAndAction: true,
+      alwaysShowTitle: true,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -48,10 +49,17 @@ class _ShowProductState extends State<ShowProduct> {
       backgroundColor: Colors.white,
       headerWidget: Container(
         color: widget.category.color,
-        child: Icon(
-          widget.category.icon,
-          size: 100,
-          color: const Color.fromARGB(180, 255, 255, 255),
+        child: Padding(
+          padding: const EdgeInsets.all(60.0),
+          child: Card(
+            elevation: 10,
+            color: widget.category.color,
+            child: Icon(
+              widget.category.icon,
+              size: 100,
+              color: const Color.fromARGB(180, 255, 255, 255),
+            ),
+          ),
         ),
       ),
       body: [
