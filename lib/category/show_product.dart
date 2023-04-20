@@ -1,5 +1,7 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:draggable_home/draggable_home.dart';
 import 'package:flutter/material.dart';
+import 'package:mini_store/category/carousel_product.dart';
 import 'package:mini_store/object/category.dart';
 import 'package:mini_store/object/product.dart';
 
@@ -21,7 +23,7 @@ class _ShowProductState extends State<ShowProduct> {
   @override
   Widget build(BuildContext context) {
     return DraggableHome(
-      headerExpandedHeight: .6,
+      headerExpandedHeight: .58,
       stretchMaxHeight: .8,
       leading: IconButton(
         icon: const Icon(
@@ -41,7 +43,7 @@ class _ShowProductState extends State<ShowProduct> {
           IconButton(
               onPressed: () {},
               icon: const Icon(
-                Icons.edit,
+                Icons.delete,
                 color: Colors.white,
               ))
         ],
@@ -50,15 +52,10 @@ class _ShowProductState extends State<ShowProduct> {
       headerWidget: Container(
         color: widget.category.color,
         child: Padding(
-          padding: const EdgeInsets.all(60.0),
-          child: Card(
-            elevation: 10,
-            color: widget.category.color,
-            child: Icon(
-              widget.category.icon,
-              size: 100,
-              color: const Color.fromARGB(180, 255, 255, 255),
-            ),
+          padding: const EdgeInsets.all(10.0),
+          child: CarouselProduct(
+            category: widget.category,
+            product: widget.product,
           ),
         ),
       ),

@@ -1,9 +1,12 @@
+import 'dart:ui';
+
 class Product {
   int id;
   String name;
   String description;
   double price;
   int disponibility;
+  List<Image> images = [];
 
   Product({
     required this.id,
