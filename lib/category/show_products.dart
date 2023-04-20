@@ -185,55 +185,10 @@ class _ShowProductsState extends State<ShowProducts> {
                                             Navigator.push(context,
                                                 MaterialPageRoute(
                                                     builder: (builder) {
-                                              return DraggableHome(
-                                                leading: IconButton(
-                                                  icon: const Icon(
-                                                    Icons.arrow_back,
-                                                    color: Colors.white,
-                                                  ),
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                ),
-                                                appBarColor:
-                                                    widget.category.color,
-                                                alwaysShowLeadingAndAction:
-                                                    true,
-                                                title: const Text(''),
-                                                backgroundColor: Colors.white,
-                                                headerWidget: Container(
-                                                  color: widget.category.color,
-                                                  child: Icon(
-                                                    widget.category.icon,
-                                                    size: 100,
-                                                    color: const Color.fromARGB(
-                                                        180, 255, 255, 255),
-                                                  ),
-                                                ),
-                                                body: [
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Text(
-                                                        widget
-                                                            .category
-                                                            .products[index]
-                                                            .name,
-                                                        style: TextStyle(
-                                                            fontSize: 32,
-                                                            color: widget
-                                                                .category.color,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                      )
-                                                    ],
-                                                  )
-                                                ],
+                                              return ShowProduct(
+                                                product: widget
+                                                    .category.products[index],
+                                                category: widget.category,
                                               );
                                             }));
                                           },

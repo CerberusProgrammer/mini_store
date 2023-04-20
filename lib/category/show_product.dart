@@ -20,68 +20,92 @@ class ShowProduct extends StatefulWidget {
 class _ShowProductState extends State<ShowProduct> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        foregroundColor: Colors.white,
-        title: Text(
-          widget.product.name,
-          style: const TextStyle(color: Colors.white),
+    return DraggableHome(
+      headerExpandedHeight: .6,
+      stretchMaxHeight: .8,
+      leading: IconButton(
+        icon: const Icon(
+          Icons.arrow_back,
+          color: Colors.white,
         ),
-        backgroundColor: widget.category.color,
-        actions: [],
+        onPressed: () {
+          Navigator.pop(context);
+        },
       ),
-      body: Column(
+      appBarColor: widget.category.color,
+      alwaysShowLeadingAndAction: true,
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          SizedBox(
-            height: 300,
-            child: Container(
-              color: widget.category.color,
-            ),
-          ),
-          Card()
+          IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.edit,
+                color: Colors.white,
+              ))
         ],
+      ),
+      backgroundColor: Colors.white,
+      headerWidget: Container(
+        color: widget.category.color,
+        child: Icon(
+          widget.category.icon,
+          size: 100,
+          color: const Color.fromARGB(180, 255, 255, 255),
+        ),
+      ),
+      body: [
+        Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 15),
+                      child: Text(
+                        widget.product.name,
+                        style: TextStyle(
+                            fontSize: 32,
+                            color: widget.category.color,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Text(
+                widget.category.name,
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20, right: 15),
+                child: Text(
+                  widget.product.description.isEmpty
+                      ? 'No description.'
+                      : widget.product.description,
+                ),
+              ),
+              Text(
+                '\$${widget.product.price}',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w500,
+                  color: widget.category.color,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: widget.category.color,
+        foregroundColor: Colors.white,
+        child: const Icon(Icons.edit),
       ),
     );
   }
 }
-
-/*
-DraggableHome(
-                                                appBarColor:
-                                                    widget.category.color,
-                                                alwaysShowLeadingAndAction:
-                                                    true,
-                                                title: Text(widget.category
-                                                    .products[index].name),
-                                                backgroundColor: Colors.white,
-                                                headerWidget: Container(
-                                                  color: widget.category.color,
-                                                  child: Icon(
-                                                    widget.category.icon,
-                                                    size: 100,
-                                                  ),
-                                                ),
-                                                body: [
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Text(
-                                                        widget
-                                                            .category
-                                                            .products[index]
-                                                            .name,
-                                                        style: TextStyle(
-                                                            fontSize: 24,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                      )
-                                                    ],
-                                                  )
-                                                ],
-                                              );
- */

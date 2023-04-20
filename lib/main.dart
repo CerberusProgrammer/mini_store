@@ -37,7 +37,7 @@ class _Main extends State<Main> {
     return AdaptiveTheme(
         light: ThemeData(
           colorSchemeSeed: Colors.purple,
-          brightness: Brightness.light,
+          brightness: Brightness.dark,
           useMaterial3: true,
         ),
         dark: ThemeData(
