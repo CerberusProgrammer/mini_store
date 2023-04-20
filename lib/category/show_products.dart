@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mini_store/category/show_table.dart';
+import 'package:mini_store/category/show_product.dart';
+import 'package:mini_store/category/table.dart';
 import 'package:mini_store/object/category.dart';
 
 import '../add_product.dart';
@@ -19,6 +20,86 @@ class ShowProducts extends StatefulWidget {
 
 class _ShowProductsState extends State<ShowProducts> {
   bool mode = false;
+
+  @override
+  void initState() {
+    widget.category.products.addAll([
+      Product(
+          id: 1,
+          name: 'Product A',
+          description: 'Description A',
+          price: 10.0,
+          disponibility: 5),
+      Product(
+          id: 2,
+          name: 'Product B',
+          description: 'Description B',
+          price: 20.0,
+          disponibility: 10),
+      Product(
+          id: 3,
+          name: 'Product C',
+          description: 'Description C',
+          price: 30.0,
+          disponibility: 15),
+      Product(
+          id: 1,
+          name: 'Product A',
+          description: 'Description A',
+          price: 10.0,
+          disponibility: 5),
+      Product(
+          id: 2,
+          name: 'Product B',
+          description: 'Description B',
+          price: 20.0,
+          disponibility: 10),
+      Product(
+          id: 3,
+          name: 'Product C',
+          description: 'Description C',
+          price: 30.0,
+          disponibility: 15),
+      Product(
+          id: 1,
+          name: 'Product A',
+          description: 'Description A',
+          price: 10.0,
+          disponibility: 5),
+      Product(
+          id: 2,
+          name: 'Product B',
+          description: 'Description B',
+          price: 20.0,
+          disponibility: 10),
+      Product(
+          id: 3,
+          name: 'Product C',
+          description: 'Description C',
+          price: 30.0,
+          disponibility: 15),
+      Product(
+          id: 1,
+          name: 'Product A',
+          description: 'Description A',
+          price: 10.0,
+          disponibility: 5),
+      Product(
+          id: 2,
+          name: 'Product B',
+          description: 'Description B',
+          price: 20.0,
+          disponibility: 10),
+      Product(
+          id: 3,
+          name: 'Product C',
+          description: 'Description C',
+          price: 30.0,
+          disponibility: 15),
+    ]);
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,94 +127,168 @@ class _ShowProductsState extends State<ShowProducts> {
               ),
             ],
           ),
-          body: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  width: constraints.maxWidth,
-                  height: 200,
-                  child: Card(
-                    color: widget.category.color,
-                    semanticContainer: true,
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    elevation: 10,
-                    child: Stack(
-                      children: [
-                        Positioned.fill(
-                            child: Icon(
-                          widget.category.icon,
-                          size: 100,
-                          color: const Color.fromARGB(79, 0, 0, 0),
-                        ))
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0, left: 8),
+                  child: SizedBox(
+                    width: constraints.maxWidth,
+                    height: 200,
                     child: Card(
-                      elevation: 1,
-                      child: ProductDataGrid(
-                        products: [
-                          Product(
-                              id: 0,
-                              name: 'Product 1',
-                              description: 'Description for product 1',
-                              price: 23.45,
-                              disponibility: 10),
-                          Product(
-                              id: 1,
-                              name: 'Product 2',
-                              description: 'Description for product 2',
-                              price: 56.78,
-                              disponibility: 20),
-                          Product(
-                              id: 2,
-                              name: 'Product 3',
-                              description: 'Description for product 3',
-                              price: 12.34,
-                              disponibility: 30),
-                          Product(
-                              id: 3,
-                              name: 'Product 4',
-                              description: 'Description for product 4',
-                              price: 67.89,
-                              disponibility: 40),
-                          Product(
-                              id: 4,
-                              name: 'Product 5',
-                              description: 'Description for product 5',
-                              price: 45.67,
-                              disponibility: 50),
-                          Product(
-                              id: 5,
-                              name: 'Product 6',
-                              description: 'Description for product 6',
-                              price: 89.01,
-                              disponibility: 60),
-                          Product(
-                              id: 6,
-                              name: 'Product 7',
-                              description: 'Description for product 7',
-                              price: 34.56,
-                              disponibility: 70),
-                          Product(
-                              id: 7,
-                              name: 'Product 8',
-                              description: 'Description for product 8',
-                              price: 78.90,
-                              disponibility: 80),
+                      color: widget.category.color,
+                      semanticContainer: true,
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      elevation: 3,
+                      child: Stack(
+                        children: [
+                          Positioned.fill(
+                              child: Icon(
+                            widget.category.icon,
+                            size: 100,
+                            color: const Color.fromARGB(79, 0, 0, 0),
+                          ))
                         ],
                       ),
                     ),
-                  )
-                ],
-              )
-            ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 10,
+                    right: 10,
+                    left: 10,
+                  ),
+                  child: Card(
+                    elevation: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GridView.count(
+                        crossAxisCount: constraints.maxWidth ~/ 150 > 0
+                            ? constraints.maxWidth ~/ 150
+                            : 1,
+                        shrinkWrap: true,
+                        children: List.generate(
+                          widget.category.products.length,
+                          (index) {
+                            return LayoutBuilder(
+                              builder: (miniContext, miniConstraints) {
+                                return Card(
+                                  color: Colors.white,
+                                  child: InkWell(
+                                    borderRadius: BorderRadius.circular(10),
+                                    onTap: mode
+                                        ? null
+                                        : () {
+                                            Navigator.push(context,
+                                                MaterialPageRoute(
+                                                    builder: (builder) {
+                                              return ShowProduct(
+                                                product: widget
+                                                    .category.products[index],
+                                                category: widget.category,
+                                              );
+                                            }));
+                                          },
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          width: miniConstraints.maxWidth,
+                                          height:
+                                              miniConstraints.maxHeight / 2.1,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            child: Image.network(
+                                              'https://th.bing.com/th/id/R.90fba111b29085eeaea63012849ade3b?rik=ib45EKOD3MG8rQ&pid=ImgRaw&r=0',
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 5, left: 8.0),
+                                          child: Text(
+                                            widget
+                                                .category.products[index].name,
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                        const Spacer(),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 5, right: 5, bottom: 5),
+                                          child: Row(
+                                            children: [
+                                              mode
+                                                  ? IconButton(
+                                                      onPressed: () {},
+                                                      style:
+                                                          TextButton.styleFrom(
+                                                              foregroundColor:
+                                                                  widget
+                                                                      .category
+                                                                      .color),
+                                                      icon: const Icon(
+                                                          Icons.edit),
+                                                    )
+                                                  : TextButton(
+                                                      onPressed: () {},
+                                                      style:
+                                                          TextButton.styleFrom(
+                                                              foregroundColor:
+                                                                  widget
+                                                                      .category
+                                                                      .color),
+                                                      child: Text(
+                                                          '\$${widget.category.products[index].price}'),
+                                                    ),
+                                              const Spacer(),
+                                              mode
+                                                  ? IconButton(
+                                                      onPressed: () {},
+                                                      style:
+                                                          TextButton.styleFrom(
+                                                              foregroundColor:
+                                                                  widget
+                                                                      .category
+                                                                      .color),
+                                                      icon: const Icon(
+                                                          Icons.delete),
+                                                    )
+                                                  : TextButton(
+                                                      onPressed: () {},
+                                                      style:
+                                                          TextButton.styleFrom(
+                                                              foregroundColor:
+                                                                  widget
+                                                                      .category
+                                                                      .color),
+                                                      child: Text(
+                                                          '${widget.category.products[index].disponibility}'),
+                                                    ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
           floatingActionButton: mode
               ? FloatingActionButton(
@@ -156,8 +311,28 @@ class _ShowProductsState extends State<ShowProducts> {
                   child: const Icon(Icons.add),
                 )
               : FloatingActionButton(
-                  onPressed: () {},
-                  child: const Icon(Icons.search),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (builder) {
+                        return Scaffold(
+                          appBar: AppBar(
+                            title: Text(widget.category.name),
+                          ),
+                          body: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Card(
+                              elevation: 1,
+                              child: ShowTable(
+                                category: widget.category,
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                    );
+                  },
+                  child: const Icon(Icons.table_chart),
                 ),
         );
       },
