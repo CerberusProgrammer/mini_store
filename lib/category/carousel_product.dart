@@ -21,10 +21,11 @@ class CarouselProduct extends StatefulWidget {
 
 class _CarouselProductState extends State<CarouselProduct> {
   int currentPosition = 0;
+  CarouselController controller = CarouselController();
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> images = List.generate(10, (index) {
+    List<Widget> images = List.generate(5, (index) {
       return SizedBox(
         width: 300,
         child: Card(
@@ -38,34 +39,60 @@ class _CarouselProductState extends State<CarouselProduct> {
       );
     });
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        CarouselSlider(
-          items: images,
-          options: CarouselOptions(
-            height: 250,
-            initialPage: 0,
-            enlargeCenterPage: true,
-            reverse: false,
-            enableInfiniteScroll: true,
-            pauseAutoPlayOnTouch: true,
-            scrollDirection: Axis.horizontal,
-            onPageChanged: (index, reason) {
-              setState(() {
-                currentPosition = index;
-              });
-            },
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CarouselSlider(
+                carouselController: controller,
+                items: List.generate(5, (index) {
+                  return SizedBox(
+                    width: constraints.maxWidth,
+                    child: Card(
+                      color: widget.category.color,
+                      child: Icon(
+                        widget.category.icon,
+                        size: 100,
+                        color: const Color.fromARGB(180, 255, 255, 255),
+                      ),
+                    ),
+                  );
+                }),
+                options: CarouselOptions(
+                  height: 250,
+                  initialPage: 0,
+                  enlargeCenterPage: true,
+                  reverse: false,
+                  enableInfiniteScroll: true,
+                  pauseAutoPlayOnTouch: true,
+                  scrollDirection: Axis.horizontal,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      currentPosition = index;
+                    });
+                  },
+                ),
+              ),
+              DotsIndicator(
+                dotsCount: images.length,
+                position: currentPosition.toDouble(),
+                decorator: const DotsDecorator(
+                  activeColor: Colors.white,
+                  color: Color.fromARGB(100, 255, 255, 255),
+                ),
+                onTap: (index) {
+                  setState(() {
+                    controller.animateToPage(index.toInt());
+                  });
+                },
+              ),
+            ],
           ),
-        ),
-        DotsIndicator(
-          dotsCount: images.length,
-          position: currentPosition.toDouble(),
-          decorator: const DotsDecorator(
-              activeColor: Colors.white,
-              color: Color.fromARGB(100, 255, 255, 255)),
-        ),
-      ],
+        );
+      },
     );
   }
 }

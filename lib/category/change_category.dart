@@ -116,6 +116,7 @@ class _ChangeCategoryState extends State<ChangeCategory> {
                               padding: const EdgeInsets.all(8.0),
                               child: SizedBox(
                                 child: GridView.count(
+                                  physics: const NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
                                   crossAxisCount:
                                       ((constraints.maxWidth ~/ 100) * 1.5)
@@ -151,6 +152,7 @@ class _ChangeCategoryState extends State<ChangeCategory> {
                               padding: const EdgeInsets.all(8.0),
                               child: SizedBox(
                                 child: GridView.count(
+                                  physics: const NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
                                   crossAxisCount:
                                       ((constraints.maxWidth ~/ 100) * 1.5)

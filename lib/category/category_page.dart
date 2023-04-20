@@ -4,12 +4,10 @@ import 'package:mini_store/category/create_category.dart';
 import 'package:mini_store/category/show_products.dart';
 import 'package:mini_store/data/categories.dart';
 
-import 'create_category.dart';
-
 class CategoryPage extends StatefulWidget {
-  bool mode;
+  final bool mode;
 
-  CategoryPage({
+  const CategoryPage({
     super.key,
     required this.mode,
   });

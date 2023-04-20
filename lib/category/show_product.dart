@@ -51,12 +51,9 @@ class _ShowProductState extends State<ShowProduct> {
       backgroundColor: Colors.white,
       headerWidget: Container(
         color: widget.category.color,
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: CarouselProduct(
-            category: widget.category,
-            product: widget.product,
-          ),
+        child: CarouselProduct(
+          category: widget.category,
+          product: widget.product,
         ),
       ),
       body: [

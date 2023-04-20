@@ -1,4 +1,3 @@
-import 'package:draggable_home/draggable_home.dart';
 import 'package:flutter/material.dart';
 import 'package:mini_store/category/show_product.dart';
 import 'package:mini_store/category/table.dart';
@@ -108,6 +107,8 @@ class _ShowProductsState extends State<ShowProducts> {
       builder: (context, constraints) {
         return Scaffold(
           appBar: AppBar(
+            surfaceTintColor: widget.category.color,
+            shadowColor: widget.category.color,
             title: Text(widget.category.name),
             actions: [
               Row(
@@ -116,6 +117,7 @@ class _ShowProductsState extends State<ShowProducts> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Switch(
+                      activeColor: widget.category.color,
                       value: mode,
                       onChanged: (bool newValue) {
                         setState(() {
@@ -199,7 +201,7 @@ class _ShowProductsState extends State<ShowProducts> {
                                         SizedBox(
                                           width: miniConstraints.maxWidth,
                                           height:
-                                              miniConstraints.maxHeight / 2.1,
+                                              miniConstraints.maxHeight / 2.2,
                                           child: ClipRRect(
                                             borderRadius:
                                                 BorderRadius.circular(10),
@@ -224,7 +226,7 @@ class _ShowProductsState extends State<ShowProducts> {
                                         const Spacer(),
                                         Padding(
                                           padding: const EdgeInsets.only(
-                                              left: 5, right: 5, bottom: 5),
+                                              left: 5, right: 5),
                                           child: Row(
                                             children: [
                                               mode
@@ -239,16 +241,19 @@ class _ShowProductsState extends State<ShowProducts> {
                                                       icon: const Icon(
                                                           Icons.edit),
                                                     )
-                                                  : TextButton(
-                                                      onPressed: () {},
-                                                      style:
-                                                          TextButton.styleFrom(
-                                                              foregroundColor:
-                                                                  widget
-                                                                      .category
-                                                                      .color),
+                                                  : Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              10),
                                                       child: Text(
-                                                          '\$${widget.category.products[index].price}'),
+                                                        '\$${widget.category.products[index].price}',
+                                                        style: TextStyle(
+                                                          color: widget
+                                                              .category.color,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                      ),
                                                     ),
                                               const Spacer(),
                                               mode
@@ -263,16 +268,19 @@ class _ShowProductsState extends State<ShowProducts> {
                                                       icon: const Icon(
                                                           Icons.delete),
                                                     )
-                                                  : TextButton(
-                                                      onPressed: () {},
-                                                      style:
-                                                          TextButton.styleFrom(
-                                                              foregroundColor:
-                                                                  widget
-                                                                      .category
-                                                                      .color),
+                                                  : Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              10),
                                                       child: Text(
-                                                          '${widget.category.products[index].disponibility}'),
+                                                        '${widget.category.products[index].disponibility}',
+                                                        style: TextStyle(
+                                                          color: widget
+                                                              .category.color,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                      ),
                                                     ),
                                             ],
                                           ),
@@ -294,6 +302,7 @@ class _ShowProductsState extends State<ShowProducts> {
           ),
           floatingActionButton: mode
               ? FloatingActionButton(
+                  backgroundColor: widget.category.color,
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -310,9 +319,13 @@ class _ShowProductsState extends State<ShowProducts> {
                       });
                     });
                   },
-                  child: const Icon(Icons.add),
+                  child: const Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
                 )
               : FloatingActionButton(
+                  backgroundColor: widget.category.color,
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -334,7 +347,10 @@ class _ShowProductsState extends State<ShowProducts> {
                       }),
                     );
                   },
-                  child: const Icon(Icons.table_chart),
+                  child: const Icon(
+                    Icons.table_chart,
+                    color: Colors.white,
+                  ),
                 ),
         );
       },
