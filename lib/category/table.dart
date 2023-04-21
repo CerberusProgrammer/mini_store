@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mini_store/object/category.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
-import '../object/product.dart';
-
 class ShowTable extends StatefulWidget {
   final Category category;
 
