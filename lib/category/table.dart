@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mini_store/object/category.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
-import '../object/product.dart';
-
 class ShowTable extends StatefulWidget {
   final Category category;
 
@@ -75,6 +73,10 @@ class _ShowTable extends State<ShowTable> {
         columnSize: const PlutoGridColumnSizeConfig(
             autoSizeMode: PlutoAutoSizeMode.equal),
         style: PlutoGridStyleConfig(
+          oddRowColor: widget.category.color.withAlpha(50),
+          activatedColor: widget.category.color.withAlpha(128),
+          gridBorderColor: widget.category.color,
+          activatedBorderColor: widget.category.color,
           enableCellBorderHorizontal: false,
           enableCellBorderVertical: false,
           enableColumnBorderHorizontal: false,

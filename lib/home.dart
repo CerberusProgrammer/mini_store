@@ -80,7 +80,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
           Dashboard(mode: mode),
           CategoryPage(mode: mode),
           const Stats(),
-          const Profile(),
+          Profile(mode: mode),
         ],
       ),
       bottomNavigationBar: Material(

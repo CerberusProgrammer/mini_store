@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:draggable_home/draggable_home.dart';
 import 'package:flutter/material.dart';
 import 'package:mini_store/category/carousel_product.dart';
@@ -20,6 +19,60 @@ class ShowProduct extends StatefulWidget {
 }
 
 class _ShowProductState extends State<ShowProduct> {
+  bool mode = false;
+
+  Widget viewMode() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: Text(
+                    widget.product.name,
+                    style: TextStyle(
+                        fontSize: 32,
+                        color: widget.category.color,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Text(
+            widget.category.name,
+            style: const TextStyle(fontWeight: FontWeight.w500),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 20, right: 15),
+            child: Text(
+              widget.product.description.isEmpty
+                  ? 'No description.'
+                  : widget.product.description,
+            ),
+          ),
+          Text(
+            '\$${widget.product.price}',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w500,
+              color: widget.category.color,
+            ),
+          ),
+          Text('${widget.product.disponibility} avaible.'),
+        ],
+      ),
+    );
+  }
+
+  Widget editMode() {
+    return Text('editi');
+  }
+
   @override
   Widget build(BuildContext context) {
     return DraggableHome(
@@ -37,17 +90,23 @@ class _ShowProductState extends State<ShowProduct> {
       appBarColor: widget.category.color,
       alwaysShowLeadingAndAction: true,
       alwaysShowTitle: true,
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.delete,
-                color: Colors.white,
-              ))
-        ],
-      ),
+      actions: [
+        Padding(
+          padding: const EdgeInsets.only(right: 8.0),
+          child: IconButton(
+            onPressed: () {
+              widget.category.products.remove(widget.product);
+
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.delete,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ],
+      title: const Center(),
       backgroundColor: Colors.white,
       headerWidget: Container(
         color: widget.category.color,
@@ -56,57 +115,16 @@ class _ShowProductState extends State<ShowProduct> {
           product: widget.product,
         ),
       ),
-      body: [
-        Padding(
-          padding: const EdgeInsets.only(left: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 15),
-                      child: Text(
-                        widget.product.name,
-                        style: TextStyle(
-                            fontSize: 32,
-                            color: widget.category.color,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Text(
-                widget.category.name,
-                style: const TextStyle(fontWeight: FontWeight.w500),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20, right: 15),
-                child: Text(
-                  widget.product.description.isEmpty
-                      ? 'No description.'
-                      : widget.product.description,
-                ),
-              ),
-              Text(
-                '\$${widget.product.price}',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w500,
-                  color: widget.category.color,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
+      body: [mode ? editMode() : viewMode()],
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          setState(() {
+            mode = !mode;
+          });
+        },
         backgroundColor: widget.category.color,
         foregroundColor: Colors.white,
-        child: const Icon(Icons.edit),
+        child: Icon(mode ? Icons.done : Icons.edit),
       ),
     );
   }

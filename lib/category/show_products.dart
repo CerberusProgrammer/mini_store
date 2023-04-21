@@ -192,7 +192,11 @@ class _ShowProductsState extends State<ShowProducts> {
                                                     .category.products[index],
                                                 category: widget.category,
                                               );
-                                            }));
+                                            })).then((value) {
+                                              setState(() {
+                                                mode = mode;
+                                              });
+                                            });
                                           },
                                     child: Column(
                                       crossAxisAlignment:
