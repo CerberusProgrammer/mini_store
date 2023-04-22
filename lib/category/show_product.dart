@@ -48,7 +48,7 @@ class _ShowProductState extends State<ShowProduct> {
             style: const TextStyle(fontWeight: FontWeight.w500),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 20, right: 15),
+            padding: const EdgeInsets.only(top: 20, right: 15, bottom: 20),
             child: Text(
               widget.product.description.isEmpty
                   ? 'No description.'
@@ -63,7 +63,17 @@ class _ShowProductState extends State<ShowProduct> {
               color: widget.category.color,
             ),
           ),
-          Text('${widget.product.disponibility} avaible.'),
+          Row(
+            children: [
+              Text(
+                '${widget.product.disponibility}',
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const Text(' avaible.'),
+            ],
+          ),
         ],
       ),
     );

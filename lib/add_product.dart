@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,6 +8,9 @@ import 'package:mini_store/data/currency.dart';
 import 'package:mini_store/object/category.dart';
 import 'package:mini_store/data/categories.dart';
 import 'package:mini_store/object/product.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
+
+import 'data/select_icons.dart';
 
 class AddProduct extends StatefulWidget {
   final Category? category;
@@ -32,6 +34,7 @@ class _AddProductState extends State<AddProduct> {
   bool isOk = false;
   int category = -1;
   String currency = "USD";
+  IconData icon = Icons.shopping_bag;
   List<ImageProvider> images = [];
 
   @override
@@ -44,19 +47,36 @@ class _AddProductState extends State<AddProduct> {
         title: 'Describe your product',
         bodyWidget: Column(
           children: [
-            SizedBox(
-              width: 300,
-              child: TextField(
-                controller: name,
-                decoration: const InputDecoration(
-                  labelText: 'Name',
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: SizedBox(
+                    width: 260,
+                    child: TextField(
+                      controller: name,
+                      decoration: const InputDecoration(
+                        labelText: 'Name',
+                      ),
+                      onSubmitted: (value) {
+                        setState(() {
+                          name.text = value;
+                        });
+                      },
+                    ),
+                  ),
                 ),
-                onSubmitted: (value) {
-                  setState(() {
-                    name.text = value;
-                  });
-                },
-              ),
+                IconButton(
+                  onPressed: () async {
+                    String? codeSanner = await scanner.scan();
+                    print(codeSanner);
+                  },
+                  icon: const Icon(Icons.barcode_reader),
+                )
+              ],
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -89,8 +109,9 @@ class _AddProductState extends State<AddProduct> {
                           },
                           items: List.generate(categories.length, (index) {
                             return DropdownMenuItem<int>(
-                                value: index,
-                                child: Text(categories[index].name));
+                              value: index,
+                              child: Text(categories[index].name),
+                            );
                           }),
                         ),
                       ),
@@ -183,17 +204,20 @@ class _AddProductState extends State<AddProduct> {
                   size: 50,
                 ),
                 onPressed: () async {
-                  final FilePickerResult? result =
-                      await FilePicker.platform.pickFiles(
-                    type: FileType.image,
-                  );
-
+                  FilePickerResult? result = await FilePicker.platform
+                      .pickFiles(type: FileType.image, allowMultiple: true);
                   if (result != null) {
-                    final PlatformFile file = result.files.first;
-                    final File imageFile = File(file.path!);
-                    final ImageProvider image = FileImage(imageFile);
+                    final List<PlatformFile> file = result.files;
+                    final List<ImageProvider> providers = [];
+
+                    for (PlatformFile f in file) {
+                      final File imageFile = File(f.path!);
+                      final ImageProvider image = FileImage(imageFile);
+                      providers.add(image);
+                    }
+
                     setState(() {
-                      images.add(image);
+                      images.addAll(providers);
                     });
                   }
                 },
@@ -217,99 +241,183 @@ class _AddProductState extends State<AddProduct> {
                   Icons.camera_alt,
                   size: 50,
                 ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.insert_emoticon_sharp, size: 50),
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (builder) {
+                        return Dialog(
+                          child: LayoutBuilder(
+                            builder: (context, constraints) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: GridView.count(
+                                  shrinkWrap: true,
+                                  crossAxisCount:
+                                      ((constraints.maxWidth ~/ 100) * 1.5)
+                                          .toInt(),
+                                  children: List.generate(selectIcons.length,
+                                      (index) {
+                                    return OutlinedButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          icon = selectIcons[index];
+                                        });
+                                        Navigator.pop(context);
+                                      },
+                                      style: OutlinedButton.styleFrom(
+                                          backgroundColor: Colors.grey,
+                                          side: const BorderSide(
+                                              color: Color.fromARGB(
+                                                  60, 35, 35, 35),
+                                              width: 4)),
+                                      child: Icon(
+                                        selectIcons[index],
+                                        color: Colors.black,
+                                      ),
+                                    );
+                                  }),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      });
+                },
               )
             ]),
           ],
         ),
         footer: images.isEmpty
             ? null
-            : CarouselSlider(
-                items: List.generate(5, (index) {
-                  return const SizedBox(
-                    width: 300,
-                    child: Card(
-                      color: Colors.blue,
-                      child: Icon(
-                        Icons.abc,
-                        size: 100,
-                        color: Color.fromARGB(180, 255, 255, 255),
-                      ),
-                    ),
-                  );
-                }),
-                options: CarouselOptions(
-                  height: 250,
-                  initialPage: 0,
-                  enlargeCenterPage: true,
-                  reverse: false,
-                  enableInfiniteScroll: true,
-                  pauseAutoPlayOnTouch: true,
-                  scrollDirection: Axis.horizontal,
-                ),
-              ),
-      ),
-    ];
-
-    /*
-    SizedBox(
-                width: 50,
-                child: Padding(
-                  padding: const EdgeInsets.all(50),
-                  child: Card(
-                    elevation: 10,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: InkWell(
-                        onTap: () {
-                          showDialog(
-                              context: context,
-                              builder: (builder) {
-                                return Dialog(
-                                  child: Stack(
-                                    alignment: Alignment.topRight,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: InkWell(
-                                          onTap: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Image(
-                                            image: images[0],
+            : images.length == 1
+                ? SizedBox(
+                    width: 50,
+                    child: Padding(
+                      padding: const EdgeInsets.all(50),
+                      child: Card(
+                        elevation: 10,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: InkWell(
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (builder) {
+                                    return Dialog(
+                                      child: Stack(
+                                        alignment: Alignment.topRight,
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            child: InkWell(
+                                              onTap: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Image(
+                                                image:
+                                                    images[images.length - 1],
+                                              ),
+                                            ),
                                           ),
-                                        ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              top: 8,
+                                            ),
+                                            child: FilledButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  images.removeLast();
+                                                });
+                                                Navigator.pop(context);
+                                              },
+                                              style: FilledButton.styleFrom(
+                                                  shape: const CircleBorder()),
+                                              child: const Icon(Icons.delete),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                          top: 8,
-                                        ),
-                                        child: FilledButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              images.removeLast();
-                                            });
-                                            Navigator.pop(context);
-                                          },
-                                          style: FilledButton.styleFrom(
-                                              shape: const CircleBorder()),
-                                          child: const Icon(Icons.delete),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              });
-                        },
-                        child: Image(
-                          image: images[0],
-                          fit: BoxFit.cover,
+                                    );
+                                  });
+                            },
+                            child: Image(
+                              image: images[images.length - 1],
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                       ),
                     ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GridView.count(
+                      crossAxisCount: 3,
+                      shrinkWrap: true,
+                      children: List.generate(images.length, (index) {
+                        return Card(
+                          elevation: 5,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: InkWell(
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (builder) {
+                                      return Dialog(
+                                        child: Stack(
+                                          alignment: Alignment.topRight,
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: InkWell(
+                                                onTap: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Image(
+                                                  image: images[index],
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                top: 8,
+                                              ),
+                                              child: FilledButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    images.removeLast();
+                                                  });
+                                                  Navigator.pop(context);
+                                                },
+                                                style: FilledButton.styleFrom(
+                                                    shape:
+                                                        const CircleBorder()),
+                                                child: const Icon(Icons.delete),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    });
+                              },
+                              child: Image(
+                                image: images[index],
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                    ),
                   ),
-                ),
-              ),
-     */
+      ),
+    ];
 
     return IntroductionScreen(
       pages: pages,
@@ -330,19 +438,35 @@ class _AddProductState extends State<AddProduct> {
           : null,
       onDone: () {
         if (widget.category == null) {
-          categories[category].products.add(
-                Product(
-                  id: widget.category!.products.length,
-                  name: name.text,
-                ),
-              );
-        } else {
-          widget.category?.products.add(
-            Product(
-              id: widget.category!.products.length,
-              name: name.text,
-            ),
+          Product product = Product(
+            id: categories[category].products.length,
+            description: description.text,
+            name: name.text,
+            price: price.text.isEmpty
+                ? 0
+                : double.parse(price.text.replaceAll(',', '')),
+            disponibility:
+                disponibility.text.isEmpty ? 0 : int.parse(disponibility.text),
+            icon: icon,
           );
+
+          product.images = images;
+
+          categories[category].products.add(product);
+        } else {
+          Product product = Product(
+            id: widget.category!.products.length,
+            description: description.text,
+            name: name.text,
+            price: price.text.isEmpty
+                ? 0
+                : double.parse(price.text.replaceAll(',', '')),
+            disponibility:
+                disponibility.text.isEmpty ? 0 : int.parse(disponibility.text),
+            icon: icon,
+          );
+          product.images = images;
+          widget.category?.products.add(product);
         }
 
         Navigator.pop(context);

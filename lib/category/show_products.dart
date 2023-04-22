@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mini_store/category/show_product.dart';
 import 'package:mini_store/category/table.dart';
+import 'package:mini_store/data/categories.dart';
 import 'package:mini_store/object/category.dart';
 
 import '../add_product.dart';
@@ -20,86 +21,6 @@ class ShowProducts extends StatefulWidget {
 
 class _ShowProductsState extends State<ShowProducts> {
   bool mode = false;
-
-  @override
-  void initState() {
-    widget.category.products.addAll([
-      Product(
-          id: 1,
-          name: 'Product A',
-          description: 'Description A',
-          price: 10.0,
-          disponibility: 5),
-      Product(
-          id: 2,
-          name: 'Product B',
-          description: 'Description B',
-          price: 20.0,
-          disponibility: 10),
-      Product(
-          id: 3,
-          name: 'Product C',
-          description: 'Description C',
-          price: 30.0,
-          disponibility: 15),
-      Product(
-          id: 1,
-          name: 'Product A',
-          description: 'Description A',
-          price: 10.0,
-          disponibility: 5),
-      Product(
-          id: 2,
-          name: 'Product B',
-          description: 'Description B',
-          price: 20.0,
-          disponibility: 10),
-      Product(
-          id: 3,
-          name: 'Product C',
-          description: 'Description C',
-          price: 30.0,
-          disponibility: 15),
-      Product(
-          id: 1,
-          name: 'Product A',
-          description: 'Description A',
-          price: 10.0,
-          disponibility: 5),
-      Product(
-          id: 2,
-          name: 'Product B',
-          description: 'Description B',
-          price: 20.0,
-          disponibility: 10),
-      Product(
-          id: 3,
-          name: 'Product C',
-          description: 'Description C',
-          price: 30.0,
-          disponibility: 15),
-      Product(
-          id: 1,
-          name: 'Product A',
-          description: 'Description A',
-          price: 10.0,
-          disponibility: 5),
-      Product(
-          id: 2,
-          name: 'Product B',
-          description: 'Description B',
-          price: 20.0,
-          disponibility: 10),
-      Product(
-          id: 3,
-          name: 'Product C',
-          description: 'Description C',
-          price: 30.0,
-          disponibility: 15),
-    ]);
-
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -162,158 +83,177 @@ class _ShowProductsState extends State<ShowProducts> {
                     right: 10,
                     left: 10,
                   ),
-                  child: Card(
-                    color: widget.category.color.withOpacity(0.4),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: GridView.count(
-                        physics: const NeverScrollableScrollPhysics(),
-                        crossAxisCount: constraints.maxWidth ~/ 150 > 0
-                            ? constraints.maxWidth ~/ 150
-                            : 1,
-                        shrinkWrap: true,
-                        children: List.generate(
-                          widget.category.products.length,
-                          (index) {
-                            return LayoutBuilder(
-                              builder: (miniContext, miniConstraints) {
-                                return Card(
-                                  color: Colors.white,
-                                  child: InkWell(
-                                    borderRadius: BorderRadius.circular(10),
-                                    onTap: mode
-                                        ? null
-                                        : () {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(
-                                                    builder: (builder) {
-                                              return ShowProduct(
-                                                product: widget
-                                                    .category.products[index],
-                                                category: widget.category,
-                                              );
-                                            })).then((value) {
-                                              setState(() {
-                                                mode = mode;
-                                              });
-                                            });
-                                          },
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        SizedBox(
-                                          width: miniConstraints.maxWidth,
-                                          height:
-                                              miniConstraints.maxHeight / 2.2,
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            child: Card(
-                                              color: widget.category.color,
-                                              child: widget
-                                                      .category
-                                                      .products[index]
-                                                      .images
-                                                      .isEmpty
-                                                  ? Icon(
-                                                      widget.category
-                                                          .products[index].icon,
-                                                    )
-                                                  : Image(
-                                                      image: widget
+                  child: widget.category.products.isEmpty
+                      ? const Center()
+                      : Card(
+                          color: widget.category.color.withOpacity(0.4),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GridView.count(
+                              physics: const NeverScrollableScrollPhysics(),
+                              crossAxisCount: constraints.maxWidth ~/ 150 > 0
+                                  ? constraints.maxWidth ~/ 150
+                                  : 1,
+                              shrinkWrap: true,
+                              children: List.generate(
+                                widget.category.products.length,
+                                (index) {
+                                  return LayoutBuilder(
+                                    builder: (miniContext, miniConstraints) {
+                                      return Card(
+                                        color: Colors.white,
+                                        child: InkWell(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          onTap: mode
+                                              ? null
+                                              : () {
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(
+                                                          builder: (builder) {
+                                                    return ShowProduct(
+                                                      product: widget.category
+                                                          .products[index],
+                                                      category: widget.category,
+                                                    );
+                                                  })).then((value) {
+                                                    setState(() {
+                                                      mode = mode;
+                                                    });
+                                                  });
+                                                },
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              SizedBox(
+                                                width: miniConstraints.maxWidth,
+                                                height:
+                                                    miniConstraints.maxHeight /
+                                                        2.2,
+                                                child: Card(
+                                                  color: widget.category.color,
+                                                  child: widget
                                                           .category
                                                           .products[index]
-                                                          .images[0],
-                                                    ),
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 5, left: 8.0),
-                                          child: Text(
-                                            widget
-                                                .category.products[index].name,
-                                            style: const TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ),
-                                        const Spacer(),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 5, right: 5),
-                                          child: Row(
-                                            children: [
-                                              mode
-                                                  ? IconButton(
-                                                      onPressed: () {},
-                                                      style:
-                                                          TextButton.styleFrom(
-                                                              foregroundColor:
-                                                                  widget
-                                                                      .category
-                                                                      .color),
-                                                      icon: const Icon(
-                                                          Icons.edit),
-                                                    )
-                                                  : Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              10),
-                                                      child: Text(
-                                                        '\$${widget.category.products[index].price}',
-                                                        style: TextStyle(
-                                                          color: widget
-                                                              .category.color,
-                                                          fontWeight:
-                                                              FontWeight.w500,
+                                                          .images
+                                                          .isEmpty
+                                                      ? Icon(
+                                                          widget
+                                                              .category
+                                                              .products[index]
+                                                              .icon,
+                                                          color: Colors.black
+                                                              .withAlpha(90),
+                                                        )
+                                                      : ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                          child: Image(
+                                                            image: widget
+                                                                .category
+                                                                .products[index]
+                                                                .images[0],
+                                                            fit: BoxFit.cover,
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 5, left: 8.0),
+                                                child: Text(
+                                                  widget.category
+                                                      .products[index].name,
+                                                  style: const TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ),
                                               const Spacer(),
-                                              mode
-                                                  ? IconButton(
-                                                      onPressed: () {},
-                                                      style:
-                                                          TextButton.styleFrom(
-                                                              foregroundColor:
-                                                                  widget
-                                                                      .category
-                                                                      .color),
-                                                      icon: const Icon(
-                                                          Icons.delete),
-                                                    )
-                                                  : Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              10),
-                                                      child: Text(
-                                                        '${widget.category.products[index].disponibility}',
-                                                        style: TextStyle(
-                                                          color: widget
-                                                              .category.color,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
-                                                      ),
-                                                    ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 5, right: 5),
+                                                child: Row(
+                                                  children: [
+                                                    mode
+                                                        ? IconButton(
+                                                            onPressed: () {},
+                                                            style: TextButton.styleFrom(
+                                                                foregroundColor:
+                                                                    widget
+                                                                        .category
+                                                                        .color),
+                                                            icon: const Icon(
+                                                                Icons.edit),
+                                                          )
+                                                        : Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(10),
+                                                            child: Text(
+                                                              '\$${widget.category.products[index].price}',
+                                                              style: TextStyle(
+                                                                color: widget
+                                                                    .category
+                                                                    .color,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                    const Spacer(),
+                                                    mode
+                                                        ? IconButton(
+                                                            onPressed: () {
+                                                              setState(() {
+                                                                widget.category
+                                                                    .products
+                                                                    .removeAt(
+                                                                        index);
+                                                              });
+                                                            },
+                                                            style: TextButton.styleFrom(
+                                                                foregroundColor:
+                                                                    widget
+                                                                        .category
+                                                                        .color),
+                                                            icon: const Icon(
+                                                                Icons.delete),
+                                                          )
+                                                        : Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(10),
+                                                            child: Text(
+                                                              '${widget.category.products[index].disponibility}',
+                                                              style: TextStyle(
+                                                                color: widget
+                                                                    .category
+                                                                    .color,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                  ],
+                                                ),
+                                              )
                                             ],
                                           ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                          },
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
                 ),
               ],
             ),

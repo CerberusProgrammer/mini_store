@@ -26,6 +26,7 @@ dependencies:
   dots_indicator: ^2.1.0
   image_picker: ^0.8.7+4
   file_picker: ^5.2.10
+  qrscan: ^0.3.3
 
 dev_dependencies:
   flutter_test:
