@@ -6,7 +6,6 @@ class Category {
   String description;
   IconData icon;
   Color color;
-  Image? image;
   List<Product> products = [];
 
   Category({
@@ -14,6 +13,5 @@ class Category {
     this.description = '',
     this.icon = Icons.store,
     this.color = Colors.lightBlue,
-    this.image,
   });
 }

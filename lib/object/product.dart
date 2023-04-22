@@ -6,7 +6,7 @@ class Product {
   String description;
   double price;
   int disponibility;
-  List<Image>? images;
+  List<ImageProvider> images = [];
   IconData icon;
 
   Product({
@@ -15,7 +15,6 @@ class Product {
     this.description = '',
     this.price = 0,
     this.disponibility = 0,
-    this.images,
     this.icon = Icons.shopping_bag,
   });
 }

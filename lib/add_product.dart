@@ -1,4 +1,9 @@
+import 'dart:io';
+
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:mini_store/data/currency.dart';
 import 'package:mini_store/object/category.dart';
@@ -27,6 +32,7 @@ class _AddProductState extends State<AddProduct> {
   bool isOk = false;
   int category = -1;
   String currency = "USD";
+  List<ImageProvider> images = [];
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +47,6 @@ class _AddProductState extends State<AddProduct> {
             SizedBox(
               width: 300,
               child: TextField(
-                autofocus: true,
                 controller: name,
                 decoration: const InputDecoration(
                   labelText: 'Name',
@@ -164,15 +169,147 @@ class _AddProductState extends State<AddProduct> {
         decoration: const PageDecoration(
           bodyAlignment: Alignment.center,
         ),
-        title: 'e',
-        body: 'e',
-        footer: Center(
-          child: Text(
-            isOk ? 'ok' : 'not ok',
-          ),
+        title: 'Add a beautiful photo',
+        bodyWidget: Column(
+          children: [
+            const Text('(Optional)'),
+            const SizedBox(
+              height: 50,
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              IconButton(
+                icon: const Icon(
+                  Icons.attach_file,
+                  size: 50,
+                ),
+                onPressed: () async {
+                  final FilePickerResult? result =
+                      await FilePicker.platform.pickFiles(
+                    type: FileType.image,
+                  );
+
+                  if (result != null) {
+                    final PlatformFile file = result.files.first;
+                    final File imageFile = File(file.path!);
+                    final ImageProvider image = FileImage(imageFile);
+                    setState(() {
+                      images.add(image);
+                    });
+                  }
+                },
+              ),
+              IconButton(
+                onPressed: () async {
+                  final ImagePicker picker = ImagePicker();
+                  final XFile? image =
+                      await picker.pickImage(source: ImageSource.camera);
+
+                  if (image != null) {
+                    final File imageFile = File(image.path);
+                    final ImageProvider imageProvider = FileImage(imageFile);
+
+                    setState(() {
+                      images.add(imageProvider);
+                    });
+                  }
+                },
+                icon: const Icon(
+                  Icons.camera_alt,
+                  size: 50,
+                ),
+              )
+            ]),
+          ],
         ),
+        footer: images.isEmpty
+            ? null
+            : CarouselSlider(
+                items: List.generate(5, (index) {
+                  return const SizedBox(
+                    width: 300,
+                    child: Card(
+                      color: Colors.blue,
+                      child: Icon(
+                        Icons.abc,
+                        size: 100,
+                        color: Color.fromARGB(180, 255, 255, 255),
+                      ),
+                    ),
+                  );
+                }),
+                options: CarouselOptions(
+                  height: 250,
+                  initialPage: 0,
+                  enlargeCenterPage: true,
+                  reverse: false,
+                  enableInfiniteScroll: true,
+                  pauseAutoPlayOnTouch: true,
+                  scrollDirection: Axis.horizontal,
+                ),
+              ),
       ),
     ];
+
+    /*
+    SizedBox(
+                width: 50,
+                child: Padding(
+                  padding: const EdgeInsets.all(50),
+                  child: Card(
+                    elevation: 10,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: InkWell(
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (builder) {
+                                return Dialog(
+                                  child: Stack(
+                                    alignment: Alignment.topRight,
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Image(
+                                            image: images[0],
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                          top: 8,
+                                        ),
+                                        child: FilledButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              images.removeLast();
+                                            });
+                                            Navigator.pop(context);
+                                          },
+                                          style: FilledButton.styleFrom(
+                                              shape: const CircleBorder()),
+                                          child: const Icon(Icons.delete),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              });
+                        },
+                        child: Image(
+                          image: images[0],
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+     */
 
     return IntroductionScreen(
       pages: pages,

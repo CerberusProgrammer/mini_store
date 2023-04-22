@@ -70,7 +70,7 @@ class _ShowProductState extends State<ShowProduct> {
   }
 
   Widget editMode() {
-    return Text('editi');
+    return const Text('editi');
   }
 
   @override

@@ -211,10 +211,21 @@ class _ShowProductsState extends State<ShowProducts> {
                                                 BorderRadius.circular(10),
                                             child: Card(
                                               color: widget.category.color,
-                                              child: Icon(
-                                                widget.category.products[index]
-                                                    .icon,
-                                              ),
+                                              child: widget
+                                                      .category
+                                                      .products[index]
+                                                      .images
+                                                      .isEmpty
+                                                  ? Icon(
+                                                      widget.category
+                                                          .products[index].icon,
+                                                    )
+                                                  : Image(
+                                                      image: widget
+                                                          .category
+                                                          .products[index]
+                                                          .images[0],
+                                                    ),
                                             ),
                                           ),
                                         ),
