@@ -209,9 +209,12 @@ class _ShowProductsState extends State<ShowProducts> {
                                           child: ClipRRect(
                                             borderRadius:
                                                 BorderRadius.circular(10),
-                                            child: Image.network(
-                                              'https://th.bing.com/th/id/R.90fba111b29085eeaea63012849ade3b?rik=ib45EKOD3MG8rQ&pid=ImgRaw&r=0',
-                                              fit: BoxFit.cover,
+                                            child: Card(
+                                              color: widget.category.color,
+                                              child: Icon(
+                                                widget.category.products[index]
+                                                    .icon,
+                                              ),
                                             ),
                                           ),
                                         ),

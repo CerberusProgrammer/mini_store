@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
 class Product {
   int id;
@@ -6,7 +6,8 @@ class Product {
   String description;
   double price;
   int disponibility;
-  List<Image> images = [];
+  List<Image>? images;
+  IconData icon;
 
   Product({
     required this.id,
@@ -14,5 +15,7 @@ class Product {
     this.description = '',
     this.price = 0,
     this.disponibility = 0,
+    this.images,
+    this.icon = Icons.shopping_bag,
   });
 }
