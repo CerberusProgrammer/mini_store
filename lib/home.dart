@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mini_store/category/category_page.dart';
 import 'package:mini_store/dashboard/dashboard.dart';
 import 'package:mini_store/profile/profile.dart';
+import 'package:mini_store/search/search.dart';
 import 'package:mini_store/stats/stats.dart';
 
 class Home extends StatefulWidget {
@@ -15,10 +16,14 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   late TabController controller;
   bool mode = false;
 
-  static const List<Tab> tabs = [
+  static List<Tab> tabs = const [
     Tab(
       icon: Icon(Icons.home),
       text: 'Home',
+    ),
+    Tab(
+      icon: Icon(Icons.search),
+      text: 'Search',
     ),
     Tab(
       icon: Icon(Icons.category),
@@ -45,7 +50,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
     super.initState();
 
     controller = TabController(
-      length: 4,
+      length: tabs.length,
       vsync: this,
     );
   }
@@ -78,6 +83,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
         controller: controller,
         children: [
           Dashboard(mode: mode),
+          Search(mode: mode),
           CategoryPage(mode: mode),
           const Stats(),
           Profile(mode: mode),

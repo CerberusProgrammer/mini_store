@@ -19,26 +19,9 @@ class Dashboard extends StatelessWidget {
   Widget viewMode(BoxConstraints constraints) {
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          children: [
-            SizedBox(
-              width: constraints.maxWidth,
-              height: 150,
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: Card(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 3,
-                    itemBuilder: (itemBuilder, index) {
-                      return Text('$index');
-                    },
-                  ),
-                ),
-              ),
-            ),
-          ],
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          child: const Icon(Icons.add),
         ),
       ),
     );

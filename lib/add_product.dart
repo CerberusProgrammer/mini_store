@@ -30,12 +30,11 @@ class _AddProductState extends State<AddProduct> {
   final TextEditingController price = TextEditingController();
   final TextEditingController disponibility = TextEditingController();
 
-  bool isCompleted = false;
-  bool isOk = false;
   int category = -1;
   String currency = "USD";
   IconData icon = Icons.shopping_bag;
   List<ImageProvider> images = [];
+  String barCode = "";
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +72,8 @@ class _AddProductState extends State<AddProduct> {
                   onPressed: () async {
                     String? codeSanner = await scanner.scan();
                     print(codeSanner);
+
+                    barCode = codeSanner ?? "";
                   },
                   icon: const Icon(Icons.barcode_reader),
                 )
