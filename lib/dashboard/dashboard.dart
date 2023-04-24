@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mini_store/add_product.dart';
+import 'package:mini_store/dashboard/shopping_cart.dart';
 
 class Dashboard extends StatelessWidget {
   final bool mode;
@@ -12,16 +14,20 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (builder, constraints) {
-      return mode ? editMode(context) : viewMode(constraints);
+      return mode ? editMode(context) : viewMode(context);
     });
   }
 
-  Widget viewMode(BoxConstraints constraints) {
+  Widget viewMode(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: const Icon(Icons.add),
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (builder) {
+              return const ShoppingCart();
+            }));
+          },
+          child: const FaIcon(FontAwesomeIcons.cashRegister),
         ),
       ),
     );
