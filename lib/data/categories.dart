@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mini_store/object/product.dart';
 
 import '../object/category.dart';
 
@@ -39,3 +40,14 @@ List<Category> categories = [
     icon: Icons.hiking,
   ),
 ];
+
+class Categories {
+  static void initCategories() {
+    categories[0].products = [
+      Product(id: 0, name: 'Nintendo'),
+      Product(id: 0, name: 'Xbox'),
+      Product(id: 0, name: 'PlayStation'),
+      Product(id: 0, name: 'Counter-Strike'),
+    ];
+  }
+}
