@@ -2,12 +2,14 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:mini_store/data/currency.dart';
 import 'package:mini_store/object/category.dart';
 import 'package:mini_store/data/categories.dart';
 import 'package:mini_store/object/product.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 
 import 'data/select_icons.dart';
@@ -46,6 +48,17 @@ class _AddProductState extends State<AddProduct> {
         title: 'Describe your product',
         bodyWidget: Column(
           children: [
+            barCode.isEmpty
+                ? const Center()
+                : Center(
+                    child: Chip(
+                      avatar: const FaIcon(FontAwesomeIcons.barcode),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      label: Text(barCode),
+                    ),
+                  ),
             Row(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -70,10 +83,13 @@ class _AddProductState extends State<AddProduct> {
                 ),
                 IconButton(
                   onPressed: () async {
-                    String? codeSanner = await scanner.scan();
-                    print(codeSanner);
+                    if (await Permission.camera.request().isGranted) {
+                      String? codeSanner = await scanner.scan();
 
-                    barCode = codeSanner ?? "";
+                      setState(() {
+                        barCode = codeSanner ?? "";
+                      });
+                    }
                   },
                   icon: const Icon(Icons.barcode_reader),
                 )

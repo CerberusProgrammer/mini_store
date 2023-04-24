@@ -28,20 +28,23 @@ class _CarouselProductState extends State<CarouselProduct> {
     return LayoutBuilder(
       builder: (context, constraints) {
         return Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.only(
+            left: 20,
+            right: 20,
+            bottom: 50,
+            top: 90,
+          ),
           child: widget.product.images.isEmpty
-              ? Padding(
-                  padding: const EdgeInsets.all(40),
-                  child: SizedBox(
-                    width: constraints.maxWidth,
-                    child: Card(
-                      elevation: 10,
-                      color: widget.category.color,
-                      child: Icon(
-                        widget.product.icon,
-                        size: 100,
-                        color: const Color.fromARGB(180, 255, 255, 255),
-                      ),
+              ? SizedBox(
+                  height: 200,
+                  width: constraints.maxWidth,
+                  child: Card(
+                    elevation: 10,
+                    color: widget.category.color,
+                    child: Icon(
+                      widget.product.icon,
+                      size: 100,
+                      color: const Color.fromARGB(180, 255, 255, 255),
                     ),
                   ),
                 )
