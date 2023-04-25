@@ -1,11 +1,11 @@
 import 'dart:io';
 
+import 'package:currency_picker/currency_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:mini_store/data/currency.dart';
 import 'package:mini_store/object/category.dart';
 import 'package:mini_store/data/categories.dart';
 import 'package:mini_store/object/product.dart';
@@ -33,10 +33,11 @@ class _AddProductState extends State<AddProduct> {
   final TextEditingController disponibility = TextEditingController();
 
   int category = -1;
-  String currency = "USD";
+  String currency = "\$";
   IconData icon = Icons.shopping_bag;
   List<ImageProvider> images = [];
   String barCode = "";
+  String currencyCode = "USD";
 
   @override
   Widget build(BuildContext context) {
@@ -163,23 +164,24 @@ class _AddProductState extends State<AddProduct> {
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: SizedBox(
+                      width: 60,
                       height: 40,
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                          borderRadius: BorderRadius.circular(10),
-                          dropdownColor:
-                              Theme.of(context).colorScheme.secondaryContainer,
-                          value: currency,
-                          onChanged: (value) {
-                            setState(() {
-                              currency = value ?? 'USD';
-                            });
-                          },
-                          items: List.generate(currencies.length, (index) {
-                            return DropdownMenuItem<String>(
-                                value: currencies[index],
-                                child: Text(currencies[index]));
-                          }),
+                      child: IconButton(
+                        onPressed: () {
+                          showCurrencyPicker(
+                            context: context,
+                            onSelect: (Currency value) {
+                              setState(() {
+                                currency = value.symbol;
+                                currencyCode = value.code;
+                              });
+                            },
+                          );
+                        },
+                        icon: Text(
+                          currencyCode,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w600, fontSize: 18),
                         ),
                       ),
                     ),
@@ -260,46 +262,47 @@ class _AddProductState extends State<AddProduct> {
                 ),
               ),
               IconButton(
-                icon: const Icon(Icons.insert_emoticon_sharp, size: 50),
+                icon: const Icon(
+                  Icons.insert_emoticon_sharp,
+                  size: 50,
+                ),
                 onPressed: () {
                   showDialog(
                       context: context,
                       builder: (builder) {
-                        return Dialog(
-                          child: LayoutBuilder(
-                            builder: (context, constraints) {
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: GridView.count(
-                                  shrinkWrap: true,
-                                  crossAxisCount:
-                                      ((constraints.maxWidth ~/ 100) * 1.5)
-                                          .toInt(),
-                                  children: List.generate(selectIcons.length,
-                                      (index) {
-                                    return OutlinedButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          icon = selectIcons[index];
-                                        });
-                                        Navigator.pop(context);
-                                      },
-                                      style: OutlinedButton.styleFrom(
-                                          backgroundColor: Colors.grey,
-                                          side: const BorderSide(
-                                              color: Color.fromARGB(
-                                                  60, 35, 35, 35),
-                                              width: 4)),
-                                      child: Icon(
-                                        selectIcons[index],
-                                        color: Colors.black,
-                                      ),
-                                    );
-                                  }),
-                                ),
-                              );
-                            },
+                        return AlertDialog(
+                          title: const Text('Pick an Icon'),
+                          content: SizedBox(
+                            width: 300,
+                            height: 400,
+                            child: GridView.count(
+                              shrinkWrap: true,
+                              crossAxisCount: 5,
+                              children:
+                                  List.generate(selectIcons.length, (index) {
+                                return IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      icon = selectIcons[index];
+                                    });
+                                    Navigator.pop(context);
+                                  },
+                                  icon: Icon(
+                                    selectIcons[index],
+                                    color: Colors.black,
+                                  ),
+                                );
+                              }),
+                            ),
                           ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text('Close'),
+                            ),
+                          ],
                         );
                       });
                 },
