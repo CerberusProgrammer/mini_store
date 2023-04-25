@@ -138,6 +138,19 @@ class _ShoppingCartState extends State<ShoppingCart> {
                                     trailing: IconButton(
                                       icon: const Icon(Icons.add),
                                       onPressed: () {
+                                        for (int i = 0;
+                                            i < shoppingList.length;
+                                            i++) {
+                                          if (shoppingList[i].id ==
+                                              category!.products[index].id) {
+                                            setState(() {
+                                              shoppingList[i].quantity =
+                                                  shoppingList[i].quantity + 1;
+                                            });
+                                            return;
+                                          }
+                                        }
+
                                         setState(() {
                                           shoppingList
                                               .add(category!.products[index]);

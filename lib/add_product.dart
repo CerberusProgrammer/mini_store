@@ -465,6 +465,7 @@ class _AddProductState extends State<AddProduct> {
             disponibility:
                 disponibility.text.isEmpty ? 0 : int.parse(disponibility.text),
             icon: icon,
+            color: widget.category!.color,
           );
 
           product.images = images;
@@ -481,6 +482,7 @@ class _AddProductState extends State<AddProduct> {
             disponibility:
                 disponibility.text.isEmpty ? 0 : int.parse(disponibility.text),
             icon: icon,
+            color: widget.category!.color,
           );
           product.images = images;
           widget.category?.products.add(product);

@@ -44,10 +44,30 @@ List<Category> categories = [
 class Categories {
   static void initCategories() {
     categories[0].products = [
-      Product(id: 0, name: 'Nintendo'),
-      Product(id: 0, name: 'Xbox'),
-      Product(id: 0, name: 'PlayStation'),
-      Product(id: 0, name: 'Counter-Strike'),
+      Product(
+        id: 0,
+        name: 'Nintendo',
+        color: categories[0].color,
+        price: 10,
+      ),
+      Product(
+        id: 1,
+        name: 'Xbox',
+        color: categories[0].color,
+        price: 20,
+      ),
+      Product(
+        id: 2,
+        name: 'PlayStation',
+        color: categories[0].color,
+        price: 50,
+      ),
+      Product(
+        id: 3,
+        name: 'Counter-Strike',
+        color: categories[0].color,
+        price: 100,
+      ),
     ];
   }
 }
