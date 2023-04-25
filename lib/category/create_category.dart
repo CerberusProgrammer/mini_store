@@ -125,19 +125,13 @@ class _CreateCategory extends State<CreateCategory> {
                                         .toInt(),
                                 children:
                                     List.generate(selectIcons.length, (index) {
-                                  return OutlinedButton(
+                                  return IconButton(
                                     onPressed: () {
                                       setState(() {
                                         icon = selectIcons[index];
                                       });
                                     },
-                                    style: OutlinedButton.styleFrom(
-                                        backgroundColor: Colors.grey,
-                                        side: const BorderSide(
-                                            color:
-                                                Color.fromARGB(60, 35, 35, 35),
-                                            width: 4)),
-                                    child: Icon(
+                                    icon: Icon(
                                       selectIcons[index],
                                       color: Colors.black,
                                     ),

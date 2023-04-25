@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mini_store/category/category_page.dart';
 import 'package:mini_store/dashboard/dashboard.dart';
+import 'package:mini_store/data/categories.dart';
 import 'package:mini_store/profile/profile.dart';
 import 'package:mini_store/stats/stats.dart';
 
@@ -43,7 +44,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-
+    Categories.initCategories();
     controller = TabController(
       length: tabs.length,
       vsync: this,

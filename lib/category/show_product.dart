@@ -79,12 +79,110 @@ class _ShowProductState extends State<ShowProduct> {
     );
   }
 
-  Widget editMode() {
-    return const Text('editi');
+  Widget editMode(
+    TextEditingController name,
+    TextEditingController description,
+    TextEditingController price,
+    TextEditingController avaible,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 20,
+        right: 20,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: SizedBox(
+                    height: 45,
+                    child: TextField(
+                      cursorColor: widget.category.color,
+                      decoration: InputDecoration(
+                        fillColor: widget.category.color,
+                        focusColor: widget.category.color,
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: widget.category.color,
+                          ),
+                        ),
+                      ),
+                      controller: name,
+                      style: TextStyle(
+                        fontSize: 32,
+                        color: widget.category.color,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Text(
+            widget.category.name,
+            style: const TextStyle(fontWeight: FontWeight.w500),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 15, bottom: 20),
+            child: SizedBox(
+              child: TextField(
+                controller: description,
+                decoration: InputDecoration(
+                  hintText: widget.product.description.isEmpty
+                      ? 'No description'
+                      : null,
+                  labelStyle: TextStyle(
+                    color: widget.category.color,
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: widget.category.color,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Text(
+            '\$${widget.product.price}',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w500,
+              color: widget.category.color,
+            ),
+          ),
+          Row(
+            children: [
+              Text(
+                '${widget.product.disponibility}',
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const Text(' avaible.'),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController name = TextEditingController();
+    TextEditingController description = TextEditingController();
+    TextEditingController price = TextEditingController();
+    TextEditingController avaible = TextEditingController();
+    name.text = widget.product.name;
+    description.text = widget.product.description;
+    price.text = '${widget.product.price}';
+    avaible.text = '${widget.product.disponibility}';
+
     return DraggableHome(
       headerExpandedHeight: .58,
       stretchMaxHeight: .8,
@@ -125,10 +223,14 @@ class _ShowProductState extends State<ShowProduct> {
           product: widget.product,
         ),
       ),
-      body: [mode ? editMode() : viewMode()],
+      body: [mode ? editMode(name, description, price, avaible) : viewMode()],
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
+            widget.product.name = name.text;
+            widget.product.description = description.text;
+            widget.product.price = double.parse(price.text);
+            widget.product.disponibility = int.parse(avaible.text);
             mode = !mode;
           });
         },
