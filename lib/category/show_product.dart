@@ -20,6 +20,7 @@ class ShowProduct extends StatefulWidget {
 
 class _ShowProductState extends State<ShowProduct> {
   bool mode = false;
+  bool error = false;
 
   Widget viewMode() {
     return Padding(
@@ -131,6 +132,9 @@ class _ShowProductState extends State<ShowProduct> {
             padding: const EdgeInsets.only(right: 15, bottom: 20),
             child: SizedBox(
               child: TextField(
+                keyboardType: TextInputType.multiline,
+                textInputAction: TextInputAction.newline,
+                maxLines: null,
                 controller: description,
                 decoration: InputDecoration(
                   hintText: widget.product.description.isEmpty
@@ -148,23 +152,77 @@ class _ShowProductState extends State<ShowProduct> {
               ),
             ),
           ),
-          Text(
-            '\$${widget.product.price}',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w500,
-              color: widget.category.color,
-            ),
-          ),
-          Row(
-            children: [
-              Text(
-                '${widget.product.disponibility}',
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
+          IntrinsicWidth(
+            child: TextField(
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+              maxLines: 1,
+              controller: price,
+              decoration: InputDecoration(
+                prefix: const Text('\$'),
+                filled: true,
+                fillColor: widget.category.color.withAlpha(50),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide.none,
                 ),
               ),
-              const Text(' avaible.'),
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          const Padding(padding: EdgeInsets.only(top: 1)),
+          Row(
+            children: [
+              Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(20),
+                  onTap: () {},
+                  child: Icon(
+                    Icons.remove,
+                    size: 30,
+                    color: Colors.black.withAlpha(128),
+                  ),
+                ),
+              ),
+              IntrinsicWidth(
+                child: TextField(
+                  keyboardType: const TextInputType.numberWithOptions(),
+                  maxLines: 1,
+                  controller: avaible,
+                  decoration: InputDecoration(
+                    suffix: const Text(' avaible'),
+                    filled: true,
+                    fillColor: widget.category.color.withAlpha(20),
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(20),
+                  onTap: () {},
+                  child: Icon(
+                    Icons.add,
+                    size: 30,
+                    color: Colors.black.withAlpha(128),
+                  ),
+                ),
+              ),
             ],
           ),
         ],
@@ -226,13 +284,25 @@ class _ShowProductState extends State<ShowProduct> {
       body: [mode ? editMode(name, description, price, avaible) : viewMode()],
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          setState(() {
-            widget.product.name = name.text;
-            widget.product.description = description.text;
-            widget.product.price = double.parse(price.text);
-            widget.product.disponibility = int.parse(avaible.text);
-            mode = !mode;
-          });
+          double priceD = 0;
+          try {
+            priceD = double.parse(price.text);
+            error = false;
+          } catch (e) {
+            setState(() {
+              error = true;
+            });
+          }
+
+          if (!error) {
+            setState(() {
+              widget.product.name = name.text;
+              widget.product.description = description.text;
+              widget.product.price = priceD;
+              widget.product.disponibility = int.parse(avaible.text);
+              mode = !mode;
+            });
+          }
         },
         backgroundColor: widget.category.color,
         foregroundColor: Colors.white,
