@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mini_store/category/show_product.dart';
 import 'package:mini_store/category/table.dart';
-import 'package:mini_store/data/categories.dart';
 import 'package:mini_store/object/category.dart';
 
 import '../add_product.dart';
-import '../object/product.dart';
 
 class ShowProducts extends StatefulWidget {
   final Category category;
