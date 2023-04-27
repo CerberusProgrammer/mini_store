@@ -36,7 +36,7 @@ class _Main extends State<Main> {
   Widget build(BuildContext context) {
     return AdaptiveTheme(
         light: ThemeData(
-          colorSchemeSeed: Colors.deepPurple,
+          colorSchemeSeed: Colors.pink,
           brightness: Brightness.light,
           useMaterial3: true,
         ),

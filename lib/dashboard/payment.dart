@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mini_store/dashboard/completed.dart';
 
 import '../object/product.dart';
 
@@ -104,7 +105,15 @@ class _PaymentState extends State<Payment> {
                 elevation: 5,
                 child: InkWell(
                   borderRadius: BorderRadius.circular(11),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (builder) {
+                      return Completed(
+                        payment: payment,
+                      );
+                    }));
+                  },
+                  onLongPress: () {},
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: 20,
