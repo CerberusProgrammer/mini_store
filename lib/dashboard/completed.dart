@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../object/product.dart';
+
 class Completed extends StatelessWidget {
   final double payment;
-  const Completed({super.key, required this.payment});
+  final List<Product> products;
+
+  const Completed({
+    super.key,
+    required this.payment,
+    required this.products,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +19,18 @@ class Completed extends StatelessWidget {
     final formattedDate = DateFormat('dd MMMM yyyy - HH:mm:ss').format(now);
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.close,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       body: Stack(
         children: [
           Column(
@@ -40,9 +59,12 @@ class Completed extends StatelessWidget {
                         const SizedBox(
                           height: 30,
                         ),
-                        const Text(
-                          '\$8000',
-                          style: TextStyle(color: Colors.white, fontSize: 32),
+                        Text(
+                          '\$$payment',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 32,
+                          ),
                         ),
                       ],
                     ),
@@ -67,8 +89,24 @@ class Completed extends StatelessWidget {
                             alignment: Alignment.center,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Text('data'),
+                              children: [
+                                const SizedBox(height: 40),
+                                Column(
+                                  children:
+                                      List.generate(products.length, (index) {
+                                    return Text(products[index].name);
+                                  }),
+                                ),
+                                const Spacer(),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: FilledButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text('Save'),
+                                  ),
+                                ),
                               ],
                             ),
                           ),

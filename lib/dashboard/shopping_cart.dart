@@ -181,24 +181,27 @@ class _ShoppingCartState extends State<ShoppingCart> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            double payment = 0;
-            for (int i = 0; i < shoppingList.length; i++) {
-              payment += shoppingList[i].price * shoppingList[i].quantity;
-            }
+          onPressed: shoppingList.isEmpty
+              ? null
+              : () {
+                  double payment = 0;
+                  for (int i = 0; i < shoppingList.length; i++) {
+                    payment += shoppingList[i].price * shoppingList[i].quantity;
+                  }
 
-            Navigator.push(context, MaterialPageRoute(builder: (builder) {
-              return Payment(
-                products: shoppingList,
-                totalPayment: payment,
-              );
-            }));
-          },
+                  Navigator.push(context, MaterialPageRoute(builder: (builder) {
+                    return Payment(
+                      products: shoppingList,
+                      totalPayment: payment,
+                    );
+                  }));
+                },
           child: shoppingList.isEmpty
               ? const FaIcon(
                   FontAwesomeIcons.cartShopping,
                 )
               : Badge(
+                  alignment: const AlignmentDirectional(18, -8),
                   label: Text(shoppingList.length > 99
                       ? '99+'
                       : '${shoppingList.length}'),

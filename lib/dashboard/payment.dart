@@ -106,14 +106,33 @@ class _PaymentState extends State<Payment> {
                 child: InkWell(
                   borderRadius: BorderRadius.circular(11),
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (builder) {
-                      return Completed(
-                        payment: payment,
+                    if (widget.products.isNotEmpty) {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder:
+                              ((context, animation, secondaryAnimation) {
+                            return Completed(
+                                payment: payment, products: widget.products);
+                          }),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            var begin = const Offset(0.0, 1.0);
+                            var end = Offset.zero;
+                            var curve = Curves.ease;
+
+                            var tween = Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve));
+
+                            return SlideTransition(
+                              position: animation.drive(tween),
+                              child: child,
+                            );
+                          },
+                        ),
                       );
-                    }));
+                    }
                   },
-                  onLongPress: () {},
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: 20,

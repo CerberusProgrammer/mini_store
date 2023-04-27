@@ -1,8 +1,6 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dots_indicator/dots_indicator.dart';
 import 'package:draggable_home/draggable_home.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
