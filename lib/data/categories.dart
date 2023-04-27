@@ -49,24 +49,28 @@ class Categories {
         name: 'Nintendo',
         color: categories[0].color,
         price: 10,
+        disponibility: 10,
       ),
       Product(
         id: 1,
         name: 'Xbox',
         color: categories[0].color,
         price: 20,
+        disponibility: 1,
       ),
       Product(
         id: 2,
         name: 'PlayStation',
         color: categories[0].color,
         price: 50,
+        disponibility: 3,
       ),
       Product(
         id: 3,
         name: 'Counter-Strike',
         color: categories[0].color,
         price: 100,
+        disponibility: 100,
       ),
     ];
   }

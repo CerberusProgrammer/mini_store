@@ -18,7 +18,7 @@ class Product {
     this.description = '',
     this.price = 0,
     this.disponibility = 0,
-    this.quantity = 1,
+    this.quantity = 0,
     this.icon = Icons.shopping_bag,
   });
 }

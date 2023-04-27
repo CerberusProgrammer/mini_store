@@ -143,17 +143,24 @@ class _ShoppingCartState extends State<ShoppingCart> {
                                             i++) {
                                           if (shoppingList[i].id ==
                                               category!.products[index].id) {
-                                            setState(() {
-                                              shoppingList[i].quantity =
-                                                  shoppingList[i].quantity + 1;
-                                            });
+                                            if (shoppingList[i].quantity <
+                                                shoppingList[i].disponibility) {
+                                              setState(() {
+                                                shoppingList[i].quantity =
+                                                    shoppingList[i].quantity +
+                                                        1;
+                                              });
+                                            }
+
                                             return;
                                           }
                                         }
 
+                                        Product product =
+                                            category!.products[index];
+                                        product.quantity = 1;
                                         setState(() {
-                                          shoppingList
-                                              .add(category!.products[index]);
+                                          shoppingList.add(product);
                                         });
                                       },
                                     ),
@@ -175,9 +182,15 @@ class _ShoppingCartState extends State<ShoppingCart> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
+            double payment = 0;
+            for (int i = 0; i < shoppingList.length; i++) {
+              payment += shoppingList[i].price * shoppingList[i].quantity;
+            }
+
             Navigator.push(context, MaterialPageRoute(builder: (builder) {
               return Payment(
                 products: shoppingList,
+                totalPayment: payment,
               );
             }));
           },

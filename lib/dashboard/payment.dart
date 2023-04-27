@@ -4,10 +4,12 @@ import '../object/product.dart';
 
 class Payment extends StatefulWidget {
   final List<Product> products;
+  final double totalPayment;
 
   const Payment({
     super.key,
     required this.products,
+    required this.totalPayment,
   });
 
   @override
@@ -15,14 +17,16 @@ class Payment extends StatefulWidget {
 }
 
 class _PaymentState extends State<Payment> {
-  double totalPayment = 0;
+  double payment = 0;
+
+  @override
+  void initState() {
+    payment = widget.totalPayment;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    for (Product product in widget.products) {
-      totalPayment += product.price * product.quantity;
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Payment'),
@@ -55,9 +59,12 @@ class _PaymentState extends State<Payment> {
                     children: [
                       IconButton(
                         onPressed: () {
-                          setState(() {
-                            widget.products[index].quantity--;
-                          });
+                          if (widget.products[index].quantity > 0) {
+                            setState(() {
+                              widget.products[index].quantity--;
+                              payment -= widget.products[index].price;
+                            });
+                          }
                         },
                         icon: const Icon(Icons.remove),
                       ),
@@ -67,9 +74,13 @@ class _PaymentState extends State<Payment> {
                       ),
                       IconButton(
                           onPressed: () {
-                            setState(() {
-                              widget.products[index].quantity++;
-                            });
+                            if (widget.products[index].quantity <
+                                widget.products[index].disponibility) {
+                              setState(() {
+                                widget.products[index].quantity++;
+                                payment += widget.products[index].price;
+                              });
+                            }
                           },
                           icon: const Icon(Icons.add)),
                     ],
@@ -81,10 +92,38 @@ class _PaymentState extends State<Payment> {
         ),
       ),
       bottomNavigationBar: Container(
-        color: Theme.of(context).colorScheme.primary.withAlpha(50),
-        height: 60,
+        color: Theme.of(context).colorScheme.primary.withAlpha(160),
+        height: 80,
         child: Row(
-          children: [Chip(label: Text('Total: $totalPayment'))],
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                color: Theme.of(context).colorScheme.primary,
+                elevation: 5,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(11),
+                  onTap: () {},
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                      top: 10,
+                      bottom: 10,
+                    ),
+                    child: Text(
+                      'Total: \$$payment',
+                      style: const TextStyle(
+                          fontSize: 24,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
