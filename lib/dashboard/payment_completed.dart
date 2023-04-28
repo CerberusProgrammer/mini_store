@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mini_store/home.dart';
 
 import '../object/product.dart';
 
-class Completed extends StatelessWidget {
+class PaymentCompleted extends StatelessWidget {
   final double payment;
   final List<Product> products;
 
-  const Completed({
+  const PaymentCompleted({
     super.key,
     required this.payment,
     required this.products,
@@ -28,6 +29,9 @@ class Completed extends StatelessWidget {
           ),
           onPressed: () {
             Navigator.pop(context);
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const Home()),
+            );
           },
         ),
       ),
@@ -85,34 +89,60 @@ class Completed extends StatelessWidget {
                         ),
                         child: Container(
                           color: Colors.white,
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const SizedBox(height: 40),
-                                Column(
-                                  children:
-                                      List.generate(products.length, (index) {
-                                    return Text(products[index].name);
-                                  }),
+                          child: Column(
+                            children: [
+                              const Spacer(),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children:
+                                    List.generate(products.length, (index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 30,
+                                      right: 30,
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          '${products[index].quantity} - ${products[index].name} ',
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        const Spacer(),
+                                        Text(
+                                          '${products[index].price * products[index].quantity}',
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }),
+                              ),
+                              const Spacer(),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: FilledButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) => const Home()),
+                                    );
+                                  },
+                                  child: const Text('Save'),
                                 ),
-                                const Spacer(),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: FilledButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text('Save'),
-                                  ),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               )

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mini_store/dashboard/completed.dart';
+import 'package:mini_store/dashboard/change.dart';
+import 'package:mini_store/dashboard/payment_completed.dart';
 
 import '../object/product.dart';
 
@@ -45,7 +46,9 @@ class _PaymentState extends State<Payment> {
                     backgroundColor:
                         widget.products[index].color.withAlpha(128),
                     child: widget.products[index].images.isEmpty
-                        ? Icon(widget.products[index].icon)
+                        ? Icon(
+                            widget.products[index].icon,
+                          )
                         : Image(
                             image: widget.products[index].images[0],
                           ),
@@ -107,13 +110,130 @@ class _PaymentState extends State<Payment> {
                   borderRadius: BorderRadius.circular(11),
                   onTap: () {
                     if (widget.products.isNotEmpty) {
+                      showDialog(
+                          context: context,
+                          builder: (builder) {
+                            return Change(
+                              products: widget.products,
+                              total: payment,
+                            );
+                          }).then((value) {
+                        if (value != null) {
+                          if (value > 0) {
+                            showDialog(
+                              context: context,
+                              builder: (builder) {
+                                return AlertDialog(
+                                  title: const Text('Change'),
+                                  content: Row(
+                                    children: [
+                                      const Text(
+                                        'Return ',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                      Text(
+                                        '\$${(value as double).toStringAsFixed(2)} USD',
+                                        style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 18,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text('Cancel')),
+                                    FilledButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          Navigator.push(
+                                            context,
+                                            PageRouteBuilder(
+                                              pageBuilder: ((context, animation,
+                                                  secondaryAnimation) {
+                                                return PaymentCompleted(
+                                                  products: widget.products,
+                                                  payment: widget.totalPayment,
+                                                );
+                                              }),
+                                              transitionsBuilder: (context,
+                                                  animation,
+                                                  secondaryAnimation,
+                                                  child) {
+                                                var begin =
+                                                    const Offset(0.0, 1.0);
+                                                var end = Offset.zero;
+                                                var curve = Curves.ease;
+
+                                                var tween = Tween(
+                                                        begin: begin, end: end)
+                                                    .chain(CurveTween(
+                                                        curve: curve));
+
+                                                return SlideTransition(
+                                                  position:
+                                                      animation.drive(tween),
+                                                  child: child,
+                                                );
+                                              },
+                                            ),
+                                          );
+                                        },
+                                        child: const Text('Complete'))
+                                  ],
+                                );
+                              },
+                            );
+                          } else {
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder:
+                                    ((context, animation, secondaryAnimation) {
+                                  return PaymentCompleted(
+                                    products: widget.products,
+                                    payment: widget.totalPayment,
+                                  );
+                                }),
+                                transitionsBuilder: (context, animation,
+                                    secondaryAnimation, child) {
+                                  var begin = const Offset(0.0, 1.0);
+                                  var end = Offset.zero;
+                                  var curve = Curves.ease;
+
+                                  var tween = Tween(begin: begin, end: end)
+                                      .chain(CurveTween(curve: curve));
+
+                                  return SlideTransition(
+                                    position: animation.drive(tween),
+                                    child: child,
+                                  );
+                                },
+                              ),
+                            );
+                          }
+                        }
+                      });
+                    }
+/*
+                    if (widget.products.isNotEmpty) {
                       Navigator.push(
                         context,
                         PageRouteBuilder(
                           pageBuilder:
                               ((context, animation, secondaryAnimation) {
-                            return Completed(
-                                payment: payment, products: widget.products);
+                            return Change(
+                              products: widget.products,
+                              total: widget.totalPayment,
+                            );
                           }),
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) {
@@ -132,6 +252,7 @@ class _PaymentState extends State<Payment> {
                         ),
                       );
                     }
+                    */
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(
