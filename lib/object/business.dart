@@ -1,3 +1,5 @@
+import 'package:mini_store/data/money.dart';
+
 class Business {
   String name;
   String description;
@@ -6,6 +8,7 @@ class Business {
   String email;
   int category;
   List<String> categoryList = [];
+  List<Money> moneyList = [];
 
   Business({
     required this.name,
@@ -15,9 +18,4 @@ class Business {
     this.email = '',
     this.category = 0,
   });
-
-  @override
-  String toString() {
-    return '';
-  }
 }

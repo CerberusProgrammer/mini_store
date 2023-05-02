@@ -1,5 +1,6 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:mini_store/data/wallet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'data/themes.dart';
@@ -11,6 +12,8 @@ void main() async {
   final prefs = await SharedPreferences.getInstance();
   Themes.defaultIndex = prefs.getInt('defaultIndex') ?? 0;
   bool presentation = prefs.getBool('presentation') ?? false;
+
+  Wallet.money;
 
   runApp(
     Main(
@@ -47,12 +50,12 @@ class _Main extends State<Main> {
   Widget build(BuildContext context) {
     return AdaptiveTheme(
         light: ThemeData(
-          colorSchemeSeed: Colors.pink,
+          colorSchemeSeed: Themes.colors[Themes.defaultIndex],
           brightness: Brightness.light,
           useMaterial3: true,
         ),
         dark: ThemeData(
-          colorSchemeSeed: Colors.amber,
+          colorSchemeSeed: Themes.colors[Themes.defaultIndex],
           brightness: Brightness.dark,
           useMaterial3: true,
         ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mini_store/data/transaction.dart';
+import 'package:mini_store/data/wallet.dart';
 import 'package:mini_store/home.dart';
 
 import '../object/product.dart';
@@ -129,6 +131,15 @@ class PaymentCompleted extends StatelessWidget {
                                 padding: const EdgeInsets.all(8.0),
                                 child: FilledButton(
                                   onPressed: () {
+                                    Transaction transaction = Transaction(
+                                      date: now,
+                                      money: payment,
+                                      products: products,
+                                    );
+                                    Wallet.money.transactions.add(transaction);
+                                    Wallet.insertHourMoney(now, transaction);
+                                    Wallet.insertWeekMoney(now, transaction);
+
                                     Navigator.pop(context);
                                     Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
