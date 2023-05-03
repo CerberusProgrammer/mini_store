@@ -50,6 +50,7 @@ class Categories {
         color: categories[0].color,
         price: 10,
         disponibility: 10,
+        category: categories[0],
       ),
       Product(
         id: 1,
@@ -57,6 +58,7 @@ class Categories {
         color: categories[0].color,
         price: 20,
         disponibility: 1,
+        category: categories[0],
       ),
       Product(
         id: 2,
@@ -64,6 +66,7 @@ class Categories {
         color: categories[0].color,
         price: 50,
         disponibility: 3,
+        category: categories[0],
       ),
       Product(
         id: 3,
@@ -71,6 +74,7 @@ class Categories {
         color: categories[0].color,
         price: 100,
         disponibility: 100,
+        category: categories[0],
       ),
     ];
   }

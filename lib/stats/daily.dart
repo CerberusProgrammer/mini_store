@@ -110,9 +110,6 @@ class _DailyState extends State<Daily> {
           },
         ),
         touchCallback: (FlTouchEvent event, barTouchResponse) {
-          if (barTouchResponse?.spot != null) {
-            print('he!');
-          }
           setState(() {
             if (!event.isInterestedForInteractions ||
                 barTouchResponse == null ||

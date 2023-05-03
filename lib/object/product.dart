@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mini_store/object/category.dart';
 
 class Product {
   int id;
@@ -10,11 +11,13 @@ class Product {
   List<ImageProvider> images = [];
   Color color;
   IconData icon;
+  Category category;
 
   Product({
     required this.id,
     required this.name,
     required this.color,
+    required this.category,
     this.description = '',
     this.price = 0,
     this.disponibility = 0,

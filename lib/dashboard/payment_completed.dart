@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mini_store/data/categories.dart';
 import 'package:mini_store/data/transaction.dart';
 import 'package:mini_store/data/wallet.dart';
 import 'package:mini_store/home.dart';
@@ -139,6 +140,10 @@ class PaymentCompleted extends StatelessWidget {
                                     Wallet.money.transactions.add(transaction);
                                     Wallet.insertHourMoney(now, transaction);
                                     Wallet.insertWeekMoney(now, transaction);
+
+                                    for (int i = 0; i < products.length; i++) {
+                                      // TODO: resolve the remove products after buy.
+                                    }
 
                                     Navigator.pop(context);
                                     Navigator.of(context).pushReplacement(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mini_store/dashboard/change.dart';
 import 'package:mini_store/dashboard/payment_completed.dart';
+import 'package:mini_store/object/category.dart';
 
 import '../object/product.dart';
 
