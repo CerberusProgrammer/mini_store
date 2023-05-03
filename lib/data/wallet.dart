@@ -15,6 +15,7 @@ class Wallet {
     'sunday': Money.initial(),
   };
 
+  static double highestTransactionHour = 0;
   static Map<int, Money> hourTransactions = {
     0: Money.initial(),
     1: Money.initial(),
@@ -43,6 +44,10 @@ class Wallet {
   };
 
   static void insertHourMoney(DateTime dateTime, Transaction transaction) {
+    if (highestTransactionHour < transaction.money) {
+      highestTransactionHour = transaction.money;
+    }
+
     int hour = dateTime.hour;
     hourTransactions[hour]?.transactions.add(transaction);
   }

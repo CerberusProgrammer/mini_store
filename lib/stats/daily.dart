@@ -11,7 +11,6 @@ class Daily extends StatefulWidget {
 }
 
 class _DailyState extends State<Daily> {
-  final Duration animDuration = const Duration(milliseconds: 250);
   int touchedIndex = -1;
 
   @override
@@ -29,7 +28,6 @@ class _DailyState extends State<Daily> {
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: BarChart(
                       mainBarData(),
-                      swapAnimationDuration: animDuration,
                     ),
                   ),
                 ),
@@ -64,7 +62,9 @@ class _DailyState extends State<Daily> {
           width: 15,
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            toY: 100,
+            toY: Wallet.highestTransactionHour == 0
+                ? 100
+                : Wallet.highestTransactionHour,
             color: Theme.of(context).colorScheme.primary.withAlpha(100),
           ),
         ),
@@ -110,6 +110,9 @@ class _DailyState extends State<Daily> {
           },
         ),
         touchCallback: (FlTouchEvent event, barTouchResponse) {
+          if (barTouchResponse?.spot != null) {
+            print('he!');
+          }
           setState(() {
             if (!event.isInterestedForInteractions ||
                 barTouchResponse == null ||
@@ -160,43 +163,6 @@ class _DailyState extends State<Daily> {
           fontSize: 10,
         ),
       ),
-    );
-  }
-
-  BarChartData randomData() {
-    return BarChartData(
-      barTouchData: BarTouchData(
-        enabled: false,
-      ),
-      titlesData: FlTitlesData(
-        show: true,
-        bottomTitles: AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: true,
-            getTitlesWidget: getTitles,
-            reservedSize: 38,
-          ),
-        ),
-        leftTitles: AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: false,
-          ),
-        ),
-        topTitles: AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: false,
-          ),
-        ),
-        rightTitles: AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: false,
-          ),
-        ),
-      ),
-      borderData: FlBorderData(
-        show: false,
-      ),
-      gridData: FlGridData(show: false),
     );
   }
 }

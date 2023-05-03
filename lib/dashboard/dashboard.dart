@@ -29,6 +29,7 @@ class Dashboard extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.only(left: 8, right: 8),
                 child: Card(
+                  elevation: 5,
                   color: categories[index].color.withOpacity(0.5),
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
