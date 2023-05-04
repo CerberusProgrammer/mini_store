@@ -63,7 +63,7 @@ class _Main extends State<Main> {
         builder: (theme, darkTheme) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            title: 'Mini Store',
+            title: 'Mini Store App',
             theme: theme,
             darkTheme: darkTheme,
             home: widget.presentation ? null : const Home(),
